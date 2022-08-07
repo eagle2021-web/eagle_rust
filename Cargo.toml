@@ -1,2 +1,7 @@
 [workspace]
-members = ["web", "eagle_macro"]
+members = ["web", "eagle_macro", "shell",
+    "macro_consumer", "proc_macro_lib"]
+
+[profile.dev]
+opt-level = 3
+
