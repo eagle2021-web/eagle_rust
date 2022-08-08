@@ -4,6 +4,7 @@ use proc_macro_lib::make_answer;
 use proc_macro_lib::AnswerFn;
 use proc_macro_lib::HelperAttr;
 use proc_macro_lib::show_streams;
+use proc_macro_lib::HelloMacro;
 
 make_answer!();
 
@@ -38,6 +39,13 @@ fn invoke4() {}
 // out: attr: "delimiters"
 // out: item: "fn invoke4() {}"
 
+pub trait HelloMacro {
+    fn hello_macro();
+}
+
+#[derive(HelloMacro)]
+struct Pancakes2222;
+
 fn main() {
     println!("{}", answer());
 
@@ -46,4 +54,5 @@ fn main() {
     println!("{:?}", s);
 
     let a = invoke3();
+    Pancakes2222::hello_macro();
 }
