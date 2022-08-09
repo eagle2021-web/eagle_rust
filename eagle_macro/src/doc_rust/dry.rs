@@ -84,7 +84,9 @@ mod test {
 
     #[test]
     fn test_test2() {
+        use super::Add;
         test2!(add_assign, 1u32, 2u32, 3u32);
         add_assign();
+        let a = Add::add(1, 2);
     }
 }

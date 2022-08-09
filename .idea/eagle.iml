@@ -10,6 +10,9 @@
       <sourceFolder url="file://$MODULE_DIR$/proc_macro_lib/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/shell/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/web/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/mongodb/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/mongodb_async/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/mongodb_sync/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

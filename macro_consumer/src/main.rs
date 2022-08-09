@@ -1,3 +1,4 @@
+#![allow(unused)]
 extern crate proc_macro_lib;
 
 use proc_macro_lib::make_answer;
