@@ -6,3 +6,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+actix-rt = "2.7.0"
+# https://docs.rs/mongodb/latest/mongodb/
+mongodb = { version = "2.3.0"}
+serde = {version = "1.0.142" , features = ["derive"]}
+# In Cargo.toml, add the following dependency.
+futures = "0.3"

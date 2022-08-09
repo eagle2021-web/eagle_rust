@@ -1,7 +1,3 @@
-use mongodb::{
-    bson::doc,
-    sync::Client,
-};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -38,10 +34,13 @@ mod tests {
         ];
         collection.insert_many(docs, None)?;
 
-        let cursor = collection.find(doc! { "author": "George Orwell" }, None)?;
+        let cursor = collection
+            .find(doc! { "author": "George Orwell" }, None)?;
         for result in cursor {
             println!("title: {}", result?.title);
         }
+
+
         Ok(())
     }
 }
