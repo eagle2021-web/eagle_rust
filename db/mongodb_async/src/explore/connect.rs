@@ -89,7 +89,7 @@ mod tests {
         let typed_collection = db.collection::<Book>("books");
         let filter = doc! { "author": "George Orwell" };
         let find_options = FindOptions::builder()
-            .sort(doc! { "title": 1 }).limit(2).build();
+            .sort(doc! { "title": 1 }).limit(20).build();
 
         let mut cursor = typed_collection.find(filter, find_options).await?;
         while let Some(book) = cursor.try_next().await? {
