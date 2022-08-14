@@ -1,3 +1,5 @@
+use mongodb::{Client, Database};
+use mongodb::options::ClientOptions;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -6,16 +8,24 @@ struct Book {
     author: String,
 }
 
+async fn connect_db() -> Result<Database, mongodb::error::Error> {
+    let mut client_options = ClientOptions::parse("mongodb://localhost:27017").await?;
+    client_options.app_name = Some("My App".to_string());
+    let client = Client::with_options(client_options)?;
+    let db = client.database("mydb");
+    return Ok(db);
+}
+
 #[cfg(test)]
 mod tests {
     use futures::TryStreamExt;
     use mongodb::bson::{doc, Document};
     use mongodb::Client;
     use mongodb::options::{ClientOptions, FindOptions};
-    use crate::explore::connect::Book;
+    use crate::explore::connect::{Book, connect_db};
 
     #[actix_rt::test]
-    async fn test_connect() -> Result<(), mongodb::error::Error>{
+    async fn test_connect() -> Result<(), mongodb::error::Error> {
         // Parse a connection string into an options struct.
         let mut client_options = ClientOptions::parse("mongodb://localhost:27017").await?;
 
@@ -81,7 +91,7 @@ mod tests {
     }
 
     #[actix_rt::test]
-    async fn test_cursor_try_next() -> Result<(), mongodb::error::Error>{
+    async fn test_cursor_try_next() -> Result<(), mongodb::error::Error> {
         let mut client_options = ClientOptions::parse("mongodb://localhost:27017").await?;
         client_options.app_name = Some("My App".to_string());
         let client = Client::with_options(client_options)?;
@@ -97,4 +107,11 @@ mod tests {
         }
         Ok(())
     }
+
+    #[actix_rt::test]
+    async fn test_connect_db() {
+        let db = connect_db().await;
+        assert!(db.is_ok());
+    }
+
 }
