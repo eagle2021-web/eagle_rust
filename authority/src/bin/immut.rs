@@ -1,9 +1,9 @@
 fn main() {
-    let mut s = String::from("hello");
-    let a = &s;
+    let mut _s = String::from("hello");
+    // let a = &s;
     // let word = first_word(&s);
-    s.clear();
-    println!("{}", a);
+    // s.clear();
+    // println!("{}", a);
 }
 
 fn first_word(s: &str) -> &str{

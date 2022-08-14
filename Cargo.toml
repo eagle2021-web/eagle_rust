@@ -7,7 +7,8 @@ members = [
     "proc_macro_lib",
     "db/mongodb_async",
     "db/mongodb_sync",
-    "authority"
+    "authority",
+    "git"
 ]
 
 [profile.dev]

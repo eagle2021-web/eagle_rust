@@ -8,21 +8,14 @@ struct Book {
     author: String,
 }
 
-async fn connect_db() -> Result<Database, mongodb::error::Error> {
-    let mut client_options = ClientOptions::parse("mongodb://localhost:27017").await?;
-    client_options.app_name = Some("My App".to_string());
-    let client = Client::with_options(client_options)?;
-    let db = client.database("mydb");
-    return Ok(db);
-}
 
 #[cfg(test)]
 mod tests {
     use futures::TryStreamExt;
     use mongodb::bson::{doc, Document};
     use mongodb::Client;
-    use mongodb::options::{ClientOptions, FindOptions};
-    use crate::explore::connect::{Book, connect_db};
+    use mongodb::options::{ClientOptions, FindOneOptions, FindOptions};
+    use crate::explore::connect::{Book};
 
     #[actix_rt::test]
     async fn test_connect() -> Result<(), mongodb::error::Error> {
@@ -110,8 +103,10 @@ mod tests {
 
     #[actix_rt::test]
     async fn test_insert_many() -> Result<(), mongodb::error::Error>{
-        let db = connect_db().await;
-        let db = db.unwrap();
+        let mut client_options = ClientOptions::parse("mongodb://localhost:27017").await?;
+        client_options.app_name = Some("My App".to_string());
+        let client = Client::with_options(client_options)?;
+        let db = client.database("mydb");
         let food = db.collection::<Document>("food");
         let arr = vec![
             doc! {"fruit": ["apple", "banana", "peach"]},
@@ -123,8 +118,22 @@ mod tests {
     }
 
     #[actix_rt::test]
-    async fn test_connect_db() {
-        let db = connect_db().await;
-        assert!(db.is_ok());
+    async fn test_find_one() -> Result<(), mongodb::error::Error>{
+        let mut client_options = ClientOptions::parse("mongodb://localhost:27017").await?;
+        client_options.app_name = Some("My App".to_string());
+        let client = Client::with_options(client_options)?;
+        let db = client.database("mydb");
+        let food = db.collection::<Document>("food");
+        let find_options = FindOneOptions::builder()
+            .return_key(false)
+            .projection(doc! {"_id": 0})
+            .build();
+        let res = food.find_one(doc!{"fruit": "banana"}, find_options)
+            .await?;
+        if let Some(d) = &res {
+            println!("{}", d);
+        }
+        Ok(())
     }
+
 }
