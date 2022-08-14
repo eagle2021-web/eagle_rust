@@ -1,5 +1,3 @@
-use mongodb::{Client, Database};
-use mongodb::options::ClientOptions;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -14,7 +12,7 @@ mod tests {
     use futures::TryStreamExt;
     use mongodb::bson::{doc, Document};
     use mongodb::Client;
-    use mongodb::options::{ClientOptions, FindOneOptions, FindOptions};
+    use mongodb::options::{ClientOptions, FindOneOptions, FindOptions, UpdateOptions};
     use crate::explore::connect::{Book};
 
     #[actix_rt::test]
@@ -102,7 +100,7 @@ mod tests {
     }
 
     #[actix_rt::test]
-    async fn test_insert_many() -> Result<(), mongodb::error::Error>{
+    async fn test_insert_many() -> Result<(), mongodb::error::Error> {
         let mut client_options = ClientOptions::parse("mongodb://localhost:27017").await?;
         client_options.app_name = Some("My App".to_string());
         let client = Client::with_options(client_options)?;
@@ -111,14 +109,14 @@ mod tests {
         let arr = vec![
             doc! {"fruit": ["apple", "banana", "peach"]},
             doc! {"fruit": ["apple", "kumquat", "orange"]},
-            doc! {"fruit": ["cherry", "banana", "apple"]}
+            doc! {"fruit": ["cherry", "banana", "apple"]},
         ];
         food.insert_many(arr, None).await?;
         Ok(())
     }
 
     #[actix_rt::test]
-    async fn test_find_one() -> Result<(), mongodb::error::Error>{
+    async fn test_find_one() -> Result<(), mongodb::error::Error> {
         let mut client_options = ClientOptions::parse("mongodb://localhost:27017").await?;
         client_options.app_name = Some("My App".to_string());
         let client = Client::with_options(client_options)?;
@@ -128,7 +126,7 @@ mod tests {
             .return_key(false)
             .projection(doc! {"_id": 0})
             .build();
-        let res = food.find_one(doc!{"fruit": "banana"}, find_options)
+        let res = food.find_one(doc! {"fruit": "banana"}, find_options)
             .await?;
         if let Some(d) = &res {
             println!("{}", d);
@@ -136,4 +134,45 @@ mod tests {
         Ok(())
     }
 
+    #[actix_rt::test]
+    async fn test_update_one() -> Result<(), mongodb::error::Error> {
+        let mut client_options = ClientOptions::parse("mongodb://localhost:27017").await?;
+        client_options.app_name = Some("My App".to_string());
+        let client = Client::with_options(client_options)?;
+        let db = client.database("mydb");
+        let food = db.collection::<Document>("food");
+        let update = UpdateOptions::builder()
+            .upsert(true)
+            .build();
+        let d = food.update_one(doc! {
+            "fruit": ["apple", "banana", "peach2"]
+        }, doc! {
+            "$set": {
+                "fruit": "watermelon"
+            }
+        }, update).await?;
+        println!("{:?}", d);
+        Ok(())
+    }
+
+    #[actix_rt::test]
+    async fn test_update_many() -> Result<(), mongodb::error::Error> {
+        let mut client_options = ClientOptions::parse("mongodb://localhost:27017").await?;
+        client_options.app_name = Some("My App".to_string());
+        let client = Client::with_options(client_options)?;
+        let db = client.database("mydb");
+        let food = db.collection::<Document>("food");
+        let update = UpdateOptions::builder()
+            .upsert(true)
+            .build();
+        let d = food.update_many(doc! {
+            "name": "eagle22"
+        }, doc! {
+            "$set": {
+                "fruit": "watermelon_eagle22_update_many"
+            }
+        }, update).await?;
+        println!("{:?}", d);
+        Ok(())
+    }
 }
