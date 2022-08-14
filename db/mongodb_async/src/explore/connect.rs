@@ -166,10 +166,13 @@ mod tests {
             .upsert(true)
             .build();
         let d = food.update_many(doc! {
-            "name": "eagle22"
+            "name": {
+                "$regex": "^eagle.*$"
+            }
         }, doc! {
             "$set": {
-                "fruit": "watermelon_eagle22_update_many"
+                "name": "eagle",
+                "fruit": "watermelon_eagle_update_many"
             }
         }, update).await?;
         println!("{:?}", d);

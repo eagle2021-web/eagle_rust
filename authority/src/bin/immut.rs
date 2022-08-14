@@ -1,7 +1,8 @@
+#![allow(unused_mut)]
 fn main() {
-    let mut _s = String::from("hello");
+    let mut s = String::from("hello");
     // let a = &s;
-    // let word = first_word(&s);
+    let _word = first_word(&s);
     // s.clear();
     // println!("{}", a);
 }
