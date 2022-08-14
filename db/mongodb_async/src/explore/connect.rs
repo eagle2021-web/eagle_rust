@@ -109,9 +109,22 @@ mod tests {
     }
 
     #[actix_rt::test]
+    async fn test_insert_many() -> Result<(), mongodb::error::Error>{
+        let db = connect_db().await;
+        let db = db.unwrap();
+        let food = db.collection::<Document>("food");
+        let arr = vec![
+            doc! {"fruit": ["apple", "banana", "peach"]},
+            doc! {"fruit": ["apple", "kumquat", "orange"]},
+            doc! {"fruit": ["cherry", "banana", "apple"]}
+        ];
+        food.insert_many(arr, None).await?;
+        Ok(())
+    }
+
+    #[actix_rt::test]
     async fn test_connect_db() {
         let db = connect_db().await;
         assert!(db.is_ok());
     }
-
 }
