@@ -1,3 +1,4 @@
+use rand::prelude::*;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -6,14 +7,28 @@ struct Book {
     author: String,
 }
 
-
+fn rand_word() -> String {
+    let mut rng = rand::thread_rng();
+    let n = rng.gen::<u8>() % 20 + 1;
+    let mut v = vec![0_u8; n as usize];
+    for v in v.iter_mut() {
+        let cur = rng.gen::<u8>() % 26;
+        *v = 'a' as u8 + cur;
+    }
+    String::from_utf8(v).unwrap()
+}
+fn rand_age() -> u8 {
+    let mut rng = rand::thread_rng();
+    rng.gen::<u8>() % 128 + 1
+}
 #[cfg(test)]
 mod tests {
     use futures::TryStreamExt;
     use mongodb::bson::{doc, Document};
     use mongodb::Client;
     use mongodb::options::{ClientOptions, FindOneOptions, FindOptions, UpdateOptions};
-    use crate::explore::connect::{Book};
+    use rand::Rng;
+    use crate::explore::connect::{Book, rand_age, rand_word};
 
     #[actix_rt::test]
     async fn test_connect() -> Result<(), mongodb::error::Error> {
@@ -141,7 +156,7 @@ mod tests {
         let client = Client::with_options(client_options)?;
         let db = client.database("mydb");
         let food = db.collection::<Document>("food");
-        let update = UpdateOptions::builder()
+        let options = UpdateOptions::builder()
             .upsert(true)
             .build();
         let d = food.update_one(doc! {
@@ -150,7 +165,7 @@ mod tests {
             "$set": {
                 "fruit": "watermelon"
             }
-        }, update).await?;
+        }, options).await?;
         println!("{:?}", d);
         Ok(())
     }
@@ -162,7 +177,7 @@ mod tests {
         let client = Client::with_options(client_options)?;
         let db = client.database("mydb");
         let food = db.collection::<Document>("food");
-        let update = UpdateOptions::builder()
+        let options = UpdateOptions::builder()
             .upsert(true)
             .build();
         let d = food.update_many(doc! {
@@ -174,8 +189,28 @@ mod tests {
                 "name": "eagle",
                 "fruit": "watermelon_eagle_update_many"
             }
-        }, update).await?;
+        }, options).await?;
         println!("{:?}", d);
         Ok(())
+    }
+
+    #[test]
+    fn test_rand_word() {
+        for _i in 0..1000_000 {
+            let s = rand_word();
+            assert!(s.len() > 0);
+            assert!(s.len() <= 20);
+            s.as_bytes().into_iter()
+                .for_each(|v|assert!(*v >= 'a' as u8 && *v <= 'z' as u8));
+        }
+    }
+
+    #[test]
+    fn test_rand_age() {
+        for _ in 0..1000_000 {
+            let age = rand_age();
+            assert!(age <= 128);
+            assert!(age >= 1);
+        }
     }
 }

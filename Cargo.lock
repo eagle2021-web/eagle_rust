@@ -649,6 +649,7 @@ dependencies = [
  "actix-rt",
  "futures",
  "mongodb",
+ "rand",
  "serde",
 ]
 
