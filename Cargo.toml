@@ -8,7 +8,7 @@ members = [
     "db/mongodb_async",
     "db/mongodb_sync",
     "authority",
-    "git"
+    "req/reqw"
 ]
 
 [profile.dev]
