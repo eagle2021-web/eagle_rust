@@ -17,18 +17,29 @@ fn rand_word() -> String {
     }
     String::from_utf8(v).unwrap()
 }
+
 fn rand_age() -> u8 {
     let mut rng = rand::thread_rng();
     rng.gen::<u8>() % 128 + 1
 }
+
+fn rand_id_card() -> String {
+    let mut rng = rand::thread_rng();
+    let mut v = vec![0_u8; 18 as usize];
+    for v in v.iter_mut() {
+        let cur = rng.gen::<u8>() % 10;
+        *v = '0' as u8 + cur;
+    }
+    String::from_utf8(v).unwrap()
+}
 #[cfg(test)]
 mod tests {
+    use chrono::prelude::*;
     use futures::TryStreamExt;
     use mongodb::bson::{doc, Document};
     use mongodb::Client;
     use mongodb::options::{ClientOptions, FindOneOptions, FindOptions, UpdateOptions};
-    use rand::Rng;
-    use crate::explore::connect::{Book, rand_age, rand_word};
+    use crate::explore::connect::{Book, rand_age, rand_id_card, rand_word};
 
     #[actix_rt::test]
     async fn test_connect() -> Result<(), mongodb::error::Error> {
@@ -201,7 +212,7 @@ mod tests {
             assert!(s.len() > 0);
             assert!(s.len() <= 20);
             s.as_bytes().into_iter()
-                .for_each(|v|assert!(*v >= 'a' as u8 && *v <= 'z' as u8));
+                .for_each(|v| assert!(*v >= 'a' as u8 && *v <= 'z' as u8));
         }
     }
 
@@ -212,5 +223,49 @@ mod tests {
             assert!(age <= 128);
             assert!(age >= 1);
         }
+    }
+
+    #[test]
+    fn test_rand_id_card() {
+        for _ in 0..100_000 {
+            let s = rand_id_card();
+            assert_eq!(s.len(), 18);
+            for x in s.as_bytes() {
+                assert!(*x >= '0' as u8 && *x <= '9' as u8)
+            }
+        }
+    }
+
+    #[actix_rt::test]
+    async fn test_insert_many_rand_name_age() -> Result<(), mongodb::error::Error> {
+        let local: DateTime<Local> = Local::now(); //
+        let mut client_options = ClientOptions::parse("mongodb://localhost:27017").await?;
+        client_options.app_name = Some("my_app".to_string());
+        let client = Client::with_options(client_options)?;
+        let db = client.database("mydb");
+        let users = db.collection::<Document>("users");
+        let options = UpdateOptions::builder()
+            .upsert(true)
+            .build();
+        for i in 0..100_000 {
+            println!("{}", i);
+            let name = rand_word();
+            let age = rand_age();
+            let id_card = rand_id_card();
+            let update_result = users.update_many(doc! {
+                "id_card": &id_card
+            }, doc!{
+                "$set": {
+                    "id_card": &id_card,
+                    "age": age as i32,
+                    "name": name
+                }
+            }, options.clone()).await?;
+            println!("{:?}", update_result);
+        }
+        let local_end: DateTime<Local> = Local::now();
+        let interval = (local_end - local).num_seconds();
+        println!("{:?}", interval);
+        Ok(())
     }
 }
