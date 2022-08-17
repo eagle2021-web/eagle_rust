@@ -8,7 +8,8 @@ members = [
     "db/mongodb_async",
     "db/mongodb_sync",
     "authority",
-    "req/reqwest2"
+    "req/reqwest2",
+    "multi_threading/fearless_concurrence"
 ]
 
 [profile.dev]

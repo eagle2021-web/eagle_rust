@@ -32,3 +32,28 @@ async fn main() -> Result<(), reqwest::Error> {
     assert!(js.is_array());
     Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+    use std::fs;
+    use reqwest;
+
+    #[actix_rt::test]
+    async fn test_a() {
+        let url = "https://item.jd.com/100031943534.html#none";
+        let text = reqwest::Client::builder()
+            .danger_accept_invalid_certs(true)
+            .no_proxy()
+            .build()
+            .unwrap()
+            .get(url)
+            .send()
+            .await
+            .unwrap()
+            .text()
+            .await
+            .unwrap();
+        println!("{:?}", text);
+        fs::write("tmp.html", text).expect("Failed to write");
+    }
+}

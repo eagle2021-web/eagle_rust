@@ -282,6 +282,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "fearless_concurrence"
+version = "0.1.0"
+
+[[package]]
 name = "fnv"
 version = "1.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1199,6 +1203,7 @@ dependencies = [
 name = "reqwest2"
 version = "0.1.0"
 dependencies = [
+ "actix-rt",
  "reqwest",
  "serde_json",
  "tokio",
