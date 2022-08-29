@@ -8,6 +8,7 @@ members = [
     "db/mongodb_async",
     "db/mongodb_sync",
     "db/mongodb_pool",
+    "db/mongodb_bin",
     "authority",
     "req/reqwest2",
     "multi_threading/fearless_concurrence"
