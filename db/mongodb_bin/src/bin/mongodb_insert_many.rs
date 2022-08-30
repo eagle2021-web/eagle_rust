@@ -1,12 +1,7 @@
-use futures::TryStreamExt;
 use mongodb::bson::Document;
 use mongodb::Client;
-use mongodb::options::{ClientOptions, FindOptions};
+use mongodb::options::{ClientOptions};
 use mongodb::bson::doc;
-use common::model::Book;
-
-#[path = "../common/mod.rs"]
-mod common;
 
 #[tokio::main]
 async fn main() -> Result<(), mongodb::error::Error> {

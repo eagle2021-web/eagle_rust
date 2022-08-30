@@ -1,3 +1,4 @@
+#![allow(unused)]
 use rand::prelude::*;
 
 pub fn rand_word() -> String {

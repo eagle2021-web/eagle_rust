@@ -1,7 +1,7 @@
 use futures::TryStreamExt;
 use mongodb::bson::Document;
 use mongodb::Client;
-use mongodb::options::{ClientOptions, FindOptions};
+use mongodb::options::{ClientOptions};
 use mongodb::bson::doc;
 use common::model::Book;
 
@@ -11,7 +11,7 @@ mod common;
 #[tokio::main]
 async fn main() -> Result<(), mongodb::error::Error> {
     // Parse a connection string into an options struct.
-    let mut client_options = ClientOptions::parse("mongodb://localhost:27017")?;
+    let mut client_options = ClientOptions::parse("mongodb://localhost:27017").await?;
 
     // Manually set an option.
     client_options.app_name = Some("My App".to_string());
@@ -66,7 +66,7 @@ async fn main() -> Result<(), mongodb::error::Error> {
     let find_options = FindOptions::builder().sort(doc! { "title": 1 }).build();
     let mut cursor = typed_collection.find(filter, find_options).await?;
 
-// Iterate over the results of the cursor.
+    // Iterate over the results of the cursor.
     while let Some(book) = cursor.try_next().await? {
         println!("title: {}", book.title);
     }

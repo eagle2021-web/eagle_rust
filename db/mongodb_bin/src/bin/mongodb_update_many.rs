@@ -1,4 +1,3 @@
-use futures::TryStreamExt;
 use mongodb::bson::Document;
 use mongodb::Client;
 use mongodb::options::{ClientOptions, UpdateOptions};

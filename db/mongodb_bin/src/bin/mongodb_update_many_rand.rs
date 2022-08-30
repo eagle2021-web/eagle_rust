@@ -1,9 +1,7 @@
-use futures::TryStreamExt;
 use mongodb::bson::Document;
 use mongodb::Client;
-use mongodb::options::{ClientOptions, FindOptions, UpdateOptions};
+use mongodb::options::{ClientOptions, UpdateOptions};
 use mongodb::bson::doc;
-use common::model::Book;
 use chrono::prelude::*;
 use common::rand_fn::*;
 
