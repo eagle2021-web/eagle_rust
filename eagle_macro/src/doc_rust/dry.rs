@@ -1,6 +1,6 @@
-#![allow(dead_code, unused_imports, unused_macros)]
+#![allow(dead_code, unused_imports, unused_macros, unnameable_test_items)]
 use std::ops::{Add, Mul, Sub};
-
+// op operation
 macro_rules! assert_equal_len {
     // The `tt` (token tree) designator is used for
     // operators and tokens.
@@ -42,26 +42,13 @@ op!(sub_assign, Sub, -=, sub);
 //     }
 // }
 
-macro_rules! test2 {
-        ($func:ident, $x:expr, $y:expr, $z:expr) => {
-            fn $func() {
-                for size in 0usize..10 {
-                    let mut x: Vec<_> = iter::repeat($x).take(size).collect();
-                    let y: Vec<_> = iter::repeat($y).take(size).collect();
-                    let z: Vec<_> = iter::repeat($z).take(size).collect();
 
-                    super::$func(&mut x, &y);
-                    println!("{:?}", &z);
-                    assert_eq!(x, z);
-                }
-            }
-        };
-    }
 
 mod test {
     use std::iter;
     macro_rules! test {
         ($func:ident, $x:expr, $y:expr, $z:expr) => {
+
             #[test]
             fn $func() {
                 for size in 0usize..10 {
@@ -85,8 +72,8 @@ mod test {
     #[test]
     fn test_test2() {
         use super::Add;
-        test2!(add_assign, 1u32, 2u32, 3u32);
+        test!(add_assign, 1u32, 2u32, 3u32);
         add_assign();
-        let a = Add::add(1, 2);
+        let _a = Add::add(1, 2);
     }
 }

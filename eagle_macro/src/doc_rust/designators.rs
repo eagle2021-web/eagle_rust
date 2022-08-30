@@ -15,6 +15,7 @@ macro_rules! create_function {
 // Create functions named `foo` and `bar` with the above macro.
 create_function!(foo);
 create_function!(bar);
+
 #[macro_export]
 macro_rules! print_result {
     // This macro takes an expression of type `expr` and prints
@@ -31,6 +32,7 @@ macro_rules! print_result {
 #[cfg(test)]
 mod tests {
     use crate::doc_rust::designators::{bar, foo};
+
     #[test]
     fn test_a() {
         foo();
@@ -47,7 +49,7 @@ mod tests {
         #[derive(Debug)]
         #[allow(dead_code)]
         struct Student {
-            name: String
+            name: String,
         }
         print_result!(
             Student{
