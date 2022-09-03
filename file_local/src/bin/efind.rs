@@ -24,7 +24,8 @@ mod tests {
     use crate::efind;
 
     #[test]
+    #[should_panic(expected = "no key named hosts2")]
     fn test_efind() {
-        efind("hosts");
+        efind("hosts2");
     }
 }
