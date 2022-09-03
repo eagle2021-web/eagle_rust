@@ -12,3 +12,5 @@ webbrowser = "0.7.1"
 name = "doc_rust"
 [[bin]]
 name = "a"
+[[bin]]
+name = "cp_bin"
