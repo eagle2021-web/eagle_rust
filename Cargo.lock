@@ -262,6 +262,10 @@ name = "eagle_macro"
 version = "0.1.0"
 
 [[package]]
+name = "edoc"
+version = "0.1.0"
+
+[[package]]
 name = "encoding_rs"
 version = "0.8.31"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -281,6 +285,10 @@ dependencies = [
  "quote",
  "syn",
 ]
+
+[[package]]
+name = "etest"
+version = "0.1.0"
 
 [[package]]
 name = "fastrand"
@@ -1478,6 +1486,7 @@ dependencies = [
 name = "shell"
 version = "0.1.0"
 dependencies = [
+ "serde_json",
  "webbrowser",
 ]
 

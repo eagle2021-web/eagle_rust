@@ -9,7 +9,9 @@ members = [
     "authority",
     "req/reqwest2",
     "multi_threading/fearless_concurrence",
-    "file_local"
+    "file_local",
+    "etest",
+    "edoc"
 ]
 
 [profile.dev]
