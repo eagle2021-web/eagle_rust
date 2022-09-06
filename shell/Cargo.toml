@@ -11,8 +11,6 @@ serde_json = {}
 [[bin]]
 name = "doc_rust"
 [[bin]]
-name = "a"
-[[bin]]
 name = "cp_bin"
 [[bin]]
 name = "git_clone"
