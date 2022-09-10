@@ -9,6 +9,7 @@ members = [
     "authority",
     "req/reqwest2",
     "multi_threading/fearless_concurrence",
+    "multi_threading/e_crossbeam",
     "file_local",
     "etest",
     "edoc"
