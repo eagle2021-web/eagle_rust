@@ -2,13 +2,14 @@ extern crate crossbeam;
 extern crate crossbeam_channel;
 use std::{thread};
 use std::fs::File;
-use std::io::BufReader;
+use std::io::{BufReader, Read};
 use std::path::Path;
 use std::time::Duration;
 use crossbeam_channel::bounded;
 use lazy_static::lazy_static;
 use std::sync::Mutex;
 use std::task::Context;
+use ring::digest::{Digest, SHA256};
 lazy_static! {
         static ref FRUIT: Mutex<Vec<String>> = Mutex::new(Vec::new());
     }
@@ -88,7 +89,7 @@ fn insert(fruit: &str) -> Result<(), &str> {
 fn compute_digest<P: AsRef<Path>>(filepath: P) -> Result<(Digest, P), std::io::Error> {
     let mut buf_reader = BufReader::new(File::open(&filepath)?);
     let mut context = ring::digest::Context::new(&SHA256);
-    let mut buffer = [0; 1024];
+    let mut buffer = [0; 10240];
 
     loop {
         let count = buf_reader.read(&mut buffer)?;
@@ -105,7 +106,7 @@ fn compute_digest<P: AsRef<Path>>(filepath: P) -> Result<(Digest, P), std::io::E
 mod tests {
     use std::{thread, time};
     use crossbeam_channel::unbounded;
-    use crate::{find_max, FRUIT, insert};
+    use crate::{compute_digest, find_max, FRUIT, insert};
     use error_chain::error_chain;
 
 
@@ -156,6 +157,14 @@ mod tests {
             db.iter().enumerate().for_each(|(i, item)| println!("{}: {}", i, item));
         }
         insert("grape")?;
+        Ok(())
+    }
+
+    #[test]
+    fn test_compute_digest() -> Result<()> {
+        let a = compute_digest("E:/斗破苍穹.txt").unwrap().0;
+        // SHA256:d55ab8a13d3f6e4f341efcbdca48b3545cd54bed9f644318e4f4f4f8ae42dedb
+        println!("{:?}", a);
         Ok(())
     }
 }
