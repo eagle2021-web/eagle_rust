@@ -11,10 +11,10 @@ Commands:
 
 Options:
     --thread-size N     Number of 32-bit words to sort [default: 4] (1GB)
-    -h, --help          Show this message.
-    --source, -s N          source json path
-    --dir, -d N            root dir which all repositories cloned in [default: d:/eagle_repos/]
-    --result, -r N          json path which result written into
+    --help, -h          Show this message.
+    --source, -s N      source json path
+    --dir, -d N         root dir which all repositories cloned in [default: d:/eagle_repos/]
+    --result, -r N      json path which result written into
     --all-tags, -a      clone all tags
     --clone-new, -c     remove old project and clone new one
 ";
@@ -55,9 +55,7 @@ fn main() {
 fn clone_all(args: Args) {
     let s = fs::read_to_string(&args.flag_source).expect("Failed to read");
     let arr_value: Value = serde_json::from_str(&s).expect("not value");
-    // println!("{:?}", arr_value);
     let (ts, tr) = mpsc::channel();
-    let mut res = json!([]);
     let counter = Arc::new(Mutex::new(0));
     let mut handles = vec![];
     let arr = Arc::new(arr_value.as_array().unwrap().clone());
