@@ -10,6 +10,8 @@ members = [
     "req/reqwest2",
     "multi_threading/fearless_concurrence",
     "multi_threading/e_crossbeam",
+    "multi_threading/pool",
+    "multi_threading/e_rayon",
     "file_local",
     "etest",
     "edoc"
