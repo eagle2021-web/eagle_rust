@@ -10,9 +10,13 @@ webbrowser = "0.7.1"
 serde_json = {}
 docopt = "1.1.1"
 serde = {}
+walkdir = "2.*"
+
 [[bin]]
 name = "doc_rust"
 [[bin]]
 name = "cp_bin"
 [[bin]]
 name = "git_clone"
+[[bin]]
+name = "suf_len"

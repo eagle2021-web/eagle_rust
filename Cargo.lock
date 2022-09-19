@@ -190,6 +190,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "common_utils"
+version = "0.1.0"
+dependencies = [
+ "walkdir",
+]
+
+[[package]]
 name = "core-foundation"
 version = "0.9.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1710,6 +1717,7 @@ dependencies = [
  "docopt",
  "serde",
  "serde_json",
+ "walkdir",
  "webbrowser",
 ]
 

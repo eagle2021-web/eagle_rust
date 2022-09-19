@@ -1,8 +1,8 @@
 #![allow(dead_code, unused_imports, non_camel_case_types)]
 
 const USAGE: &str = "
-Usage: quicksort [eagle] [options]
-       quicksort --help
+Usage: git_clone [eagle] [options]
+       git_clone --help
 
 clone tag
 

@@ -14,7 +14,8 @@ members = [
     "multi_threading/e_rayon",
     "file_local",
     "etest",
-    "edoc"
+    "edoc",
+    "common_utils"
 ]
 
 [profile.dev]
