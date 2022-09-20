@@ -14,7 +14,7 @@ Options:
     --suffix, -s N      specify suffix &str [default: .json]
     --show      show 5 results [default false]
     --begin, -b N    the results The starting index [default: 0]
-    --depth N   the max_depth of the search [default: 20]
+    --depth N       the max_depth of the search [default: 20]
     --root, -r N    The starting dir of the search [default: ./]
 ";
 
@@ -38,6 +38,7 @@ pub struct Args {
     flag_begin: usize,
     flag_depth: usize,
     flag_root: String,
+    flag_suffix: String,
 }
 
 
@@ -64,17 +65,38 @@ fn display(args: &Args, res: Vec<PathBuf>) {
 
 fn search(args: &Args) -> Vec<PathBuf> {
     let mut res = vec![];
-    println!("{:?}", args);
+    let root = PathBuf::from_str(&args.flag_root).unwrap();
+    println!("args = {:?}", args);
     for entry in WalkDir::new(&args.flag_root).max_depth(args.flag_depth) {
         let entry = entry.unwrap();
-        let name = entry.file_name().to_str().unwrap().to_string();
-        let p = PathBuf::from_str(&name).unwrap();
-        let abs_path = p.canonicalize().unwrap();
+        let p = entry.path().to_path_buf().canonicalize().unwrap();
+        let p_str = p.to_str().unwrap();
+        if !p_str.ends_with(&args.flag_suffix) {
+            continue;
+        }
         if p.is_file() && !args.flag_dir {
-            res.push(abs_path);
+            res.push(p);
         } else if p.is_dir() && args.flag_dir {
-            res.push(abs_path);
+            res.push(p);
         }
     }
     res
+}
+
+
+#[cfg(test)]
+mod tests{
+    use std::path::PathBuf;
+    use std::str::FromStr;
+
+    #[test]
+    fn test_ends_with() {
+        let p = PathBuf::from_str("Cargo.toml").unwrap();
+        let b = p.ends_with(".toml");
+        assert!(!b);
+        let p_str = p.to_str().unwrap();
+        let b = p_str.ends_with(".toml");
+        assert!(b);
+
+    }
 }
