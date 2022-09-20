@@ -1,4 +1,4 @@
-#![allow(dead_code, unused_imports, non_camel_case_types)]
+#![allow(dead_code, non_camel_case_types)]
 
 const USAGE: &str = "
 Usage: suf_len [eagle] [options]
@@ -18,15 +18,8 @@ Options:
     --root, -r N    The starting dir of the search [default: ./]
 ";
 
-use std::{env, fs, thread};
-use std::ops::Index;
-use std::path::{Path, PathBuf};
-use std::process::Command;
-use std::str::FromStr;
-use serde_json::{json, Value};
-use std::sync::{Arc, mpsc, Mutex};
-use std::sync::mpsc::Sender;
-use std::time::Duration;
+use std::{env};
+use std::path::{PathBuf};
 use docopt::Docopt;
 use walkdir::WalkDir;
 
@@ -65,7 +58,6 @@ fn display(args: &Args, res: Vec<PathBuf>) {
 
 fn search(args: &Args) -> Vec<PathBuf> {
     let mut res = vec![];
-    let root = PathBuf::from_str(&args.flag_root).unwrap();
     println!("args = {:?}", args);
     for entry in WalkDir::new(&args.flag_root).max_depth(args.flag_depth) {
         let entry = entry.unwrap();
