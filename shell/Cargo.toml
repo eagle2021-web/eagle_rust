@@ -7,9 +7,9 @@ edition = "2021"
 
 [dependencies]
 webbrowser = "0.7.1"
-serde_json = {}
+serde_json = {version = "1.0.85"}
 docopt = "1.1.1"
-serde = {}
+serde = "1.0.144"
 walkdir = "2.*"
 
 [[bin]]

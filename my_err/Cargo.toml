@@ -1,5 +1,5 @@
 [package]
-name = "common_utils"
+name = "my_err"
 version = "0.1.0"
 edition = "2021"
 
@@ -10,3 +10,4 @@ serde = "1.0.144"
 toml = "0.5.9"
 failure = "0.1.8"
 walkdir = "2.*"
+serde_json = "1.0.85"

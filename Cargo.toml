@@ -15,7 +15,8 @@ members = [
     "file_local",
     "etest",
     "edoc",
-    "common_utils"
+    "common_utils",
+    "my_err"
 ]
 
 [profile.dev]
