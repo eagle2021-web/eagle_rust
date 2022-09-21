@@ -1751,6 +1751,7 @@ name = "shell"
 version = "0.1.0"
 dependencies = [
  "docopt",
+ "my_err",
  "serde",
  "serde_json",
  "walkdir",

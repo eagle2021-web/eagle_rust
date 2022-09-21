@@ -1,3 +1,4 @@
+#![allow(unused)]
 extern crate serde;
 extern crate toml;
 
@@ -8,7 +9,7 @@ use failure::Fail;
 use serde_json;
 
 #[derive(Debug, Fail)]
-enum MyError {
+pub enum MyError {
     #[fail(display = "IO error {}.", _0)]
     Io(#[cause] std::io::Error),
     #[fail(display = "Parse error {}.", _0)]
@@ -39,7 +40,7 @@ impl From<serde_json::error::Error> for MyError {
 }
 
 
-fn parse_i32(contents: &str) -> Result<i32, MyError> {
+pub fn parse_i32(contents: &str) -> Result<i32, MyError> {
     let n = contents.trim().parse::<i32>()?;
     Ok(2 * n)
 }

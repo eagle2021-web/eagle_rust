@@ -11,7 +11,7 @@ serde_json = {version = "1.0.85"}
 docopt = "1.1.1"
 serde = "1.0.144"
 walkdir = "2.*"
-
+my_err = {path = "../my_err"}
 [[bin]]
 name = "doc_rust"
 [[bin]]

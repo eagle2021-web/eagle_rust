@@ -22,7 +22,6 @@ use std::{env};
 use std::path::{PathBuf};
 use docopt::Docopt;
 use walkdir::WalkDir;
-
 #[derive(serde::Deserialize, Debug)]
 pub struct Args {
     cmd_eagle: bool,
@@ -80,6 +79,7 @@ fn search(args: &Args) -> Vec<PathBuf> {
 mod tests{
     use std::path::PathBuf;
     use std::str::FromStr;
+    use my_err::parse_i32;
 
     #[test]
     fn test_ends_with() {
@@ -89,6 +89,14 @@ mod tests{
         let p_str = p.to_str().unwrap();
         let b = p_str.ends_with(".toml");
         assert!(b);
+    }
 
+    #[test]
+    fn test_parse_i32() {
+        match parse_i32("s1") {
+            Ok(n) => println!("{}", n),
+            Err(err) => println!("Error: {:?}", err),
+        }
+        assert!(parse_i32("11").is_ok());
     }
 }
