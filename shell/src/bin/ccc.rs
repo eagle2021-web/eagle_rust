@@ -1,4 +1,4 @@
-use druid_shell::{Application, Clipboard};
+use druid_shell::{Application};
 
 fn main() {
     let mut clipboard = Application::new().unwrap().clipboard();

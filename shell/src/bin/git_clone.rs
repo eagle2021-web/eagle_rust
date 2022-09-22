@@ -111,7 +111,7 @@ fn clone_one(sender: &Sender<Value>, value: &Value, args: &Arc<Args>) {
             js["clone_ok"] = json!(0);
             js["clone_msg"] = json!("ok");
             js["project_path"] = json!(&path);
-            sender.send(js);
+            sender.send(js).expect("err occurred about sent value");
             return;
         }
     }
@@ -135,7 +135,7 @@ fn clone_one(sender: &Sender<Value>, value: &Value, args: &Arc<Args>) {
     }
 
     println!("output.status = {:?}", output.status);
-    sender.send(js);
+    sender.send(js).expect("err occurred about sent value");
 }
 
 pub fn git_cur_tag(path: &str) -> Option<String> {
@@ -152,12 +152,6 @@ pub fn git_cur_tag(path: &str) -> Option<String> {
 #[cfg(test)]
 mod tests {
     use crate::git_cur_tag;
-
-    #[test]
-    fn test_a() {
-        let a = vec!["aaa"];
-        let b = a[0];
-    }
 
     #[test]
     fn test_git_cur_tag() {

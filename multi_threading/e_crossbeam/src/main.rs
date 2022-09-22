@@ -1,3 +1,4 @@
+#![allow(unused)]
 extern crate crossbeam;
 extern crate crossbeam_channel;
 use std::{thread};
@@ -8,7 +9,6 @@ use std::time::Duration;
 use crossbeam_channel::bounded;
 use lazy_static::lazy_static;
 use std::sync::Mutex;
-use std::task::Context;
 use ring::digest::{Digest, SHA256};
 lazy_static! {
         static ref FRUIT: Mutex<Vec<String>> = Mutex::new(Vec::new());
@@ -31,7 +31,7 @@ fn main() {
             drop(snd1);
         });
 
-        // 由 2 个县城并行处理
+        // 由 2 个线程并行处理
         for _ in 0..n_workers {
             // 从数据源发送数据到接收器，接收器接收数据
             let (sendr, recvr) = (snd2.clone(), rcv1.clone());
@@ -104,7 +104,6 @@ fn compute_digest<P: AsRef<Path>>(filepath: P) -> Result<(Digest, P), std::io::E
 
 #[cfg(test)]
 mod tests {
-    use std::{thread, time};
     use crossbeam_channel::unbounded;
     use crate::{compute_digest, find_max, FRUIT, insert};
     use error_chain::error_chain;
@@ -133,14 +132,9 @@ mod tests {
                 }
             });
         }).unwrap();
-        // for _ in 0..n_msgs {
-        //     let msg = rcv.recv().unwrap();
-        //     println!("Received {}", msg);
-        // }
-        thread::sleep(time::Duration::from_millis(100));
         println!("==========");
         drop(snd);
-        for i in rcv.iter() {
+        for i in rcv {
             // let msg = rcv.recv().unwrap();
             println!("Received {}", i);
         }
