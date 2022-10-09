@@ -2801,6 +2801,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "trait_obj"
+version = "0.1.0"
+
+[[package]]
 name = "trust-dns-proto"
 version = "0.21.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"

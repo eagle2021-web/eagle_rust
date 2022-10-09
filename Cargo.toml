@@ -16,7 +16,8 @@ members = [
     "etest",
     "edoc",
     "common_utils",
-    "my_err"
+    "my_err",
+    "e_trait/trait_obj"
 ]
 
 [profile.dev]
