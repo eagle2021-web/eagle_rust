@@ -7,4 +7,5 @@
 ```shell
 cargo new req
 cargo new req/reqwest2
+rustc
 ```
