@@ -13,31 +13,26 @@ pub enum EagleErr {
     #[fail(display = "IO error {}.", _0)]
     Io(#[cause] std::io::Error),
     #[fail(display = "Parse error {}.", _0)]
-    Parse(#[cause] std::num::ParseIntError),
+    ParseInt(#[cause] std::num::ParseIntError),
     #[fail(display = "ParseSerdeJson error {}.", _0)]
     ParseSerdeJson(#[cause] serde_json::error::Error),
 }
 
-impl From<std::io::Error> for EagleErr {
-    fn from(error: std::io::Error) -> Self {
-        println!("Error: {:?}", error);
-        EagleErr::Io(error)
-    }
+macro_rules! op3 {
+    ($a: ident, $b: ident, $c: ident, $enum: ident) => {
+        impl From<$a::$b::$c> for EagleErr {
+            fn from(error: $a::$b::$c) -> Self {
+                println!("Error: {:?}", error);
+                EagleErr::$enum(error)
+            }
+        }
+    };
 }
 
-impl From<std::num::ParseIntError> for EagleErr {
-    fn from(error: std::num::ParseIntError) -> Self {
-        println!("Error: {:?}", error);
-        EagleErr::Parse(error)
-    }
-}
+op3!(serde_json, error, Error, ParseSerdeJson);
+op3!(std, io, Error, Io);
+op3!(std, num, ParseIntError, ParseInt);
 
-impl From<serde_json::error::Error> for EagleErr {
-    fn from(error: serde_json::error::Error) -> Self {
-        println!("Error: {:?}", error);
-        EagleErr::ParseSerdeJson(error)
-    }
-}
 
 fn parse_serde_json(s: &str) -> Result<serde_json::Value, EagleErr> {
     let value: serde_json::Value = serde_json::from_str(s)?;
@@ -46,6 +41,7 @@ fn parse_serde_json(s: &str) -> Result<serde_json::Value, EagleErr> {
 
 #[cfg(test)]
 mod tests {
+    use std::fs;
     use serde_json::Value;
     use super::*;
 
@@ -70,6 +66,14 @@ mod tests {
         let s = r#"{"eagle": 18"#;
         let res = parse_serde_json(s);
         assert!(res.is_err());
+        Ok(())
+    }
+
+    #[test]
+    fn test_io_err() -> Result<(), EagleErr>{
+        let a = fs::write("a/a/a/Cargo.toml", "aaa")
+            .map_err(EagleErr::from);
+        assert!(a.is_err());
         Ok(())
     }
 }
