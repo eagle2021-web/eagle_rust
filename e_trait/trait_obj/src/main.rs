@@ -27,6 +27,7 @@ fn print_trait_object(p: &dyn Bird) {
                  *vtable.offset(2), *vtable.offset(3),  *vtable.offset(4))
     }
 }
+
 fn main() {
     println!("Hello, world!");
     let duck = Duck;
