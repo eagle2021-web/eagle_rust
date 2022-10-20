@@ -38,7 +38,11 @@ fn main() {
     let swan_fly : usize = Swan::fly as usize;
     println!("Duck::fly {}", duck_fly);
     println!("Swan::fly {}", swan_fly);
+    println!("======");
     print_trait_object(p_bird);
+    print_trait_object(p_duck);
+    print_trait_object(&duck);
+    println!("======");
     let swan = Swan;
     print_trait_object(&swan as &dyn Bird);
 }
