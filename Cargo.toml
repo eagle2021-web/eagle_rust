@@ -2,7 +2,7 @@
 members = [
     "web",
     "eagle_macro",
-    "shell",
+    "my_shell",
     "macro_consumer",
     "proc_macro_lib",
     "db/mongodb_bin",
