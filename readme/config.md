@@ -8,6 +8,7 @@ replace-with = 'tuna'
 registry = "https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git"
 ```
 
+C:\Windows\System32\drivers\etc\hosts
 ```text
 140.82.114.3 github.com
 199.232.69.194 github.global.ssl.fastly.net
