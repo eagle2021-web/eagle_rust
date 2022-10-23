@@ -20,7 +20,8 @@ members = [
     "e_trait/trait_obj",
     "e_trait/trait_safe",
     "e_trait/impl_trait",
-    "life_time"
+    "life_time",
+    "deep/resolve"
 ]
 
 [profile.dev]
