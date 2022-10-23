@@ -2513,6 +2513,7 @@ name = "resolve"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "my_err",
  "rand 0.8.5",
  "trust-dns",
 ]

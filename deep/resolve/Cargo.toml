@@ -9,3 +9,4 @@ edition = "2021"
 rand = "0.8.5"
 clap = "2.34.0"
 trust-dns = { version = "0.17.0", default-features = false }
+my_err = {path = "../../my_err"}

@@ -16,13 +16,16 @@ pub enum EagleErr {
     ParseInt(#[cause] std::num::ParseIntError),
     #[fail(display = "ParseSerdeJson error {}.", _0)]
     ParseSerdeJson(#[cause] serde_json::error::Error),
-}
+    #[fail(display = "ParseAddr error {}.", _0)]
+    ParseAddr(#[cause] std::net::AddrParseError),
 
+}
+// trust_dns::proto::error::ProtoError
 macro_rules! op3 {
     ($a: ident, $b: ident, $c: ident, $enum: ident) => {
         impl From<$a::$b::$c> for EagleErr {
             fn from(error: $a::$b::$c) -> Self {
-                println!("Error: {:?}", error);
+                // println!("Error: {:?}", error);
                 EagleErr::$enum(error)
             }
         }
@@ -32,7 +35,7 @@ macro_rules! op3 {
 op3!(serde_json, error, Error, ParseSerdeJson);
 op3!(std, io, Error, Io);
 op3!(std, num, ParseIntError, ParseInt);
-
+op3!(std, net, AddrParseError, ParseAddr);
 
 fn parse_serde_json(s: &str) -> Result<serde_json::Value, EagleErr> {
     let value: serde_json::Value = serde_json::from_str(s)?;

@@ -9,32 +9,35 @@ use trust_dns::op::{Message, MessageType, OpCode, Query};
 use trust_dns::rr::domain::Name;
 use trust_dns::rr::record_type::RecordType;
 use trust_dns::serialize::binary::*;
-fn main() {
+use my_err::EagleErr;
+fn main() -> Result<(), EagleErr> {
     // cargo run --package resolve --bin resolve www.rustinaction.com
     let app = App::new("resolve")
         .about("A simple to use DNS resolver")
         .arg(Arg::with_name("dns-server").short("s")
-            .default_value("8.8.8.8"))
-        .arg(Arg::with_name("domain-name").required(true))
+            .default_value("8.8.8.81"))
+        .arg(Arg::with_name("domain-name")
+            .required(true))
         .get_matches();
-
+    println!("====");
     let domain_name_raw = app                         // <1>
         .value_of("domain-name").unwrap();              // <1>
     let domain_name =                                 // <1>
-        Name::from_ascii(&domain_name_raw).unwrap();
+        Name::from_ascii(&domain_name_raw).expect("domain-name err");
 
     let dns_server_raw = app                          // <2>
-        .value_of("dns-server").unwrap();               // <2>
+        .value_of("dns-server").expect("no key dns-server");
+    println!("====");
+    println!("====222");
     let dns_server: SocketAddr =                      // <2>
         format!("{}:53", dns_server_raw)                // <2>
-            .parse()                                        // <2>
-            .expect("invalid address");                     // <2>
-
+            .parse()?;
+    println!("====");
     let mut request_as_bytes: Vec<u8> =               // <3>
         Vec::with_capacity(512);                        // <3>
     let mut response_as_bytes: Vec<u8> =              // <3>
         vec![0; 512];
-
+    println!("====");
     let mut msg = Message::new();                     // <4>
     msg
         .set_id(rand::random::<u16>())
@@ -46,10 +49,10 @@ fn main() {
     let mut encoder =
         BinEncoder::new(&mut request_as_bytes);         // <6>
     msg.emit(&mut encoder).unwrap();
-
+    println!("====");
     let localhost = UdpSocket::bind("0.0.0.0:0")      // <7>
         .expect("cannot bind to local socket");
-    let timeout = Duration::from_secs(3);
+    let timeout = Duration::from_secs(30);
     localhost.set_read_timeout(Some(timeout)).unwrap();
     localhost.set_nonblocking(false).unwrap();
 
@@ -74,5 +77,5 @@ fn main() {
             println!("ip = {:?}", ip.to_string());
         }
     }
-
+    Ok(())
 }
