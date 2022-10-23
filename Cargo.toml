@@ -19,6 +19,7 @@ members = [
     "my_err",
     "e_trait/trait_obj",
     "e_trait/trait_safe",
+    "e_trait/impl_trait",
     "life_time"
 ]
 
