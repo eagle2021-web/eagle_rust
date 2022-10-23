@@ -15,11 +15,10 @@ fn main() -> Result<(), EagleErr> {
     let app = App::new("resolve")
         .about("A simple to use DNS resolver")
         .arg(Arg::with_name("dns-server").short("s")
-            .default_value("8.8.8.81"))
+            .default_value("8.8.8.8"))
         .arg(Arg::with_name("domain-name")
             .required(true))
         .get_matches();
-    println!("====");
     let domain_name_raw = app                         // <1>
         .value_of("domain-name").unwrap();              // <1>
     let domain_name =                                 // <1>
@@ -27,17 +26,13 @@ fn main() -> Result<(), EagleErr> {
 
     let dns_server_raw = app                          // <2>
         .value_of("dns-server").expect("no key dns-server");
-    println!("====");
-    println!("====222");
     let dns_server: SocketAddr =                      // <2>
         format!("{}:53", dns_server_raw)                // <2>
             .parse()?;
-    println!("====");
     let mut request_as_bytes: Vec<u8> =               // <3>
         Vec::with_capacity(512);                        // <3>
     let mut response_as_bytes: Vec<u8> =              // <3>
         vec![0; 512];
-    println!("====");
     let mut msg = Message::new();                     // <4>
     msg
         .set_id(rand::random::<u16>())
@@ -49,7 +44,6 @@ fn main() -> Result<(), EagleErr> {
     let mut encoder =
         BinEncoder::new(&mut request_as_bytes);         // <6>
     msg.emit(&mut encoder).unwrap();
-    println!("====");
     let localhost = UdpSocket::bind("0.0.0.0:0")      // <7>
         .expect("cannot bind to local socket");
     let timeout = Duration::from_secs(30);
