@@ -1,6 +1,7 @@
 use clap::{App, Arg};
 use trust_dns::rr::RecordType::A;
-
+use url::Url;
+use smoltcp::iface::EthernetInterface;
 fn main() {
     let app = App::new("mget")
         .about("GET a webpage, manually")
@@ -21,7 +22,16 @@ fn main() {
     println!("tap_device = {:?}", tap_device);
     let dns_server_text = app.value_of("dns-server").unwrap();
     println!("dns_server_text = {:?}", dns_server_text);
-    
+
+    let url = Url::parse(url_text)
+        .expect("error: unable to parse <url> as a URL");
+    if url.scheme() != "http" {
+        eprintln!("eroor: only HTTP protocol supported");
+        return;
+    }
+
+
+    let http::get();
 }
 
 #[cfg(test)]
