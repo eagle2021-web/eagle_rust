@@ -1,10 +1,8 @@
-use std::fmt::format;
 use std::net::{SocketAddr, UdpSocket};
 use std::time::Duration;
 
 use clap::{App, Arg};
 use rand;
-use trust_dns::error::ParseErrorKind::Msg;
 use trust_dns::op::{Message, MessageType, OpCode, Query};
 use trust_dns::rr::domain::Name;
 use trust_dns::rr::record_type::RecordType;

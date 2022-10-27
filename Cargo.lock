@@ -641,7 +641,6 @@ dependencies = [
  "clap",
  "my_err",
  "rand 0.8.5",
- "smoltcp",
  "trust-dns",
  "url",
 ]
@@ -713,7 +712,7 @@ dependencies = [
  "keyboard-types",
  "kurbo",
  "lazy_static",
- "log 0.4.17",
+ "log",
  "objc",
  "piet-common",
  "scopeguard",
@@ -1505,7 +1504,7 @@ dependencies = [
  "cesu8",
  "combine",
  "jni-sys",
- "log 0.4.17",
+ "log",
  "thiserror",
  "walkdir",
 ]
@@ -1600,15 +1599,6 @@ dependencies = [
 
 [[package]]
 name = "log"
-version = "0.3.9"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e19e8d5c34a3e0e2223db8e060f9e8264aeeb5c5fc64a4ee9965c062211c024b"
-dependencies = [
- "log 0.4.17",
-]
-
-[[package]]
-name = "log"
 version = "0.4.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "abb12e687cfb44aa40f41fc3978ef76448f9b6038cad6aef4259d3c095a2382e"
@@ -1640,12 +1630,6 @@ checksum = "62bb907fe88d54d8d9ce32a3cceab4218ed2f6b7d35617cafe9adf84e43919cb"
 dependencies = [
  "libc",
 ]
-
-[[package]]
-name = "managed"
-version = "0.7.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c75de51135344a4f8ed3cfe2720dc27736f7711989703a0b43aadf3753c55577"
 
 [[package]]
 name = "match_cfg"
@@ -1725,7 +1709,7 @@ dependencies = [
  "iovec",
  "kernel32-sys",
  "libc",
- "log 0.4.17",
+ "log",
  "miow",
  "net2",
  "slab",
@@ -1739,7 +1723,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "57ee1c23c7c63b0c9250c339ffdc69255f110b298b901b9f6c82547b7b87caaf"
 dependencies = [
  "libc",
- "log 0.4.17",
+ "log",
  "wasi 0.11.0+wasi-snapshot-preview1",
  "windows-sys",
 ]
@@ -1845,7 +1829,7 @@ checksum = "fd7e2f3618557f980e0b17e8856252eee3c97fa12c54dff0ca290fb6266ca4a9"
 dependencies = [
  "lazy_static",
  "libc",
- "log 0.4.17",
+ "log",
  "openssl",
  "openssl-probe",
  "openssl-sys",
@@ -1882,7 +1866,7 @@ checksum = "0d0c4a7b83860226e6b4183edac21851f05d5a51756e97a1144b7f5a6b63e65f"
 dependencies = [
  "lazy_static",
  "libc",
- "log 0.4.17",
+ "log",
  "ndk",
  "ndk-context",
  "ndk-macro",
@@ -2062,7 +2046,7 @@ version = "3.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5209b2162b2c140df493a93689e04f8deab3a67634f5bc7a553c0a98e5b8d399"
 dependencies = [
- "log 0.4.17",
+ "log",
  "winapi 0.3.9",
 ]
 
@@ -2510,7 +2494,7 @@ dependencies = [
  "ipnet",
  "js-sys",
  "lazy_static",
- "log 0.4.17",
+ "log",
  "mime",
  "native-tls",
  "percent-encoding",
@@ -2609,7 +2593,7 @@ version = "0.20.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5aab8ee6c7097ed6057f43c187a62418d0c05a4bd5f18b3571db50ee0f9ce033"
 dependencies = [
- "log 0.4.17",
+ "log",
  "ring 0.16.20",
  "sct",
  "webpki",
@@ -2866,19 +2850,6 @@ name = "smallvec"
 version = "1.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2fd0db749597d91ff862fd1d55ea87f7855a744a8425a64695b6fca237d1dad1"
-
-[[package]]
-name = "smoltcp"
-version = "0.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fef582369edb298c6c41319a544ca9c4e83622f226055ccfcb35974fbb55ed34"
-dependencies = [
- "bitflags",
- "byteorder",
- "libc",
- "log 0.3.9",
- "managed",
-]
 
 [[package]]
 name = "socket2"
@@ -3287,7 +3258,7 @@ checksum = "57fc868aae093479e3131e3d165c93b1c7474109d13c90ec0dda2a1bbfff0674"
 dependencies = [
  "bytes 0.4.12",
  "futures 0.1.31",
- "log 0.4.17",
+ "log",
 ]
 
 [[package]]
@@ -3320,7 +3291,7 @@ dependencies = [
  "crossbeam-utils 0.7.2",
  "futures 0.1.31",
  "lazy_static",
- "log 0.4.17",
+ "log",
  "mio 0.6.23",
  "num_cpus",
  "parking_lot 0.9.0",
@@ -3376,7 +3347,7 @@ dependencies = [
  "crossbeam-utils 0.7.2",
  "futures 0.1.31",
  "lazy_static",
- "log 0.4.17",
+ "log",
  "num_cpus",
  "slab",
  "tokio-executor",
@@ -3402,7 +3373,7 @@ checksum = "e2a0b10e610b39c38b031a2fcab08e4b82f16ece36504988dcbd81dbba650d82"
 dependencies = [
  "bytes 0.4.12",
  "futures 0.1.31",
- "log 0.4.17",
+ "log",
  "mio 0.6.23",
  "tokio-codec",
  "tokio-io",
@@ -3419,7 +3390,7 @@ dependencies = [
  "futures 0.1.31",
  "iovec",
  "libc",
- "log 0.4.17",
+ "log",
  "mio 0.6.23",
  "mio-uds",
  "tokio-codec",
@@ -3496,7 +3467,7 @@ dependencies = [
  "failure",
  "futures 0.1.31",
  "lazy_static",
- "log 0.4.17",
+ "log",
  "radix_trie",
  "rand 0.7.3",
  "tokio 0.1.22",
@@ -3517,7 +3488,7 @@ dependencies = [
  "futures 0.1.31",
  "idna 0.2.3",
  "lazy_static",
- "log 0.4.17",
+ "log",
  "rand 0.7.3",
  "smallvec 0.6.14",
  "socket2 0.3.19",
@@ -3546,7 +3517,7 @@ dependencies = [
  "idna 0.2.3",
  "ipnet",
  "lazy_static",
- "log 0.4.17",
+ "log",
  "rand 0.8.5",
  "smallvec 1.9.0",
  "thiserror",
@@ -3565,7 +3536,7 @@ dependencies = [
  "futures-util",
  "ipconfig",
  "lazy_static",
- "log 0.4.17",
+ "log",
  "lru-cache",
  "parking_lot 0.12.1",
  "resolv-conf",
@@ -3777,7 +3748,7 @@ version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1ce8a968cb1cd110d136ff8b819a556d6fb6d919363c61534f6860c7eb172ba0"
 dependencies = [
- "log 0.4.17",
+ "log",
  "try-lock",
 ]
 
@@ -3816,7 +3787,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "662cd44805586bd52971b9586b1df85cdbbd9112e4ef4d8f41559c334dc6ac3f"
 dependencies = [
  "bumpalo",
- "log 0.4.17",
+ "log",
  "once_cell",
  "proc-macro2 1.0.43",
  "quote 1.0.21",

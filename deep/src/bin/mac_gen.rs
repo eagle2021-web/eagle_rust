@@ -1,3 +1,4 @@
+#![allow(unused)]
 extern crate rand;
 
 use rand::RngCore;
