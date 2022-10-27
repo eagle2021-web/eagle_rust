@@ -1166,7 +1166,7 @@ checksum = "41486a26d1366a8032b160b59065a59fb528530a46a49f627e7048fb8c064039"
 dependencies = [
  "anyhow",
  "heck 0.3.3",
- "itertools",
+ "itertools 0.9.0",
  "proc-macro-crate 0.1.5",
  "proc-macro-error",
  "proc-macro2 1.0.43",
@@ -1485,6 +1485,15 @@ name = "itertools"
 version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "284f18f85651fe11e8a991b2adb42cb078325c996ed026d994719efcfca1d54b"
+dependencies = [
+ "either",
+]
+
+[[package]]
+name = "itertools"
+version = "0.10.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b0fd2260e829bddf4cb6ea802289de2f86d6a7a690192fbe91b3f46e0f2c8473"
 dependencies = [
  "either",
 ]
@@ -1819,6 +1828,22 @@ dependencies = [
  "serde_json",
  "toml",
  "walkdir",
+]
+
+[[package]]
+name = "my_shell"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "common_utils",
+ "docopt",
+ "druid-shell",
+ "itertools 0.10.5",
+ "my_err",
+ "serde",
+ "serde_json",
+ "walkdir",
+ "webbrowser",
 ]
 
 [[package]]
@@ -2803,20 +2828,6 @@ dependencies = [
  "cfg-if 1.0.0",
  "cpufeatures",
  "digest",
-]
-
-[[package]]
-name = "shell"
-version = "0.1.0"
-dependencies = [
- "clap",
- "docopt",
- "druid-shell",
- "my_err",
- "serde",
- "serde_json",
- "walkdir",
- "webbrowser",
 ]
 
 [[package]]

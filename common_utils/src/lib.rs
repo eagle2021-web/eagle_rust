@@ -1,5 +1,10 @@
+use std::ffi::OsStr;
+
 pub fn add(left: usize, right: usize) -> usize {
     left + right
+}
+pub fn replace_str(p: &str) -> String {
+    p.replace("\\", "/")
 }
 
 #[cfg(test)]

@@ -1,5 +1,5 @@
 [package]
-name = "shell"
+name = "my_shell"
 version = "0.1.0"
 edition = "2021"
 
@@ -14,6 +14,9 @@ walkdir = "2.*"
 my_err = {path = "../my_err"}
 druid-shell = "0.7.0"
 clap = "2.34.0"
+itertools = "0.10.5"
+common_utils = {path="../common_utils"}
+
 [[bin]]
 name = "doc_rust"
 [[bin]]
