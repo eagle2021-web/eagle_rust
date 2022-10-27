@@ -13,7 +13,7 @@ serde = "1.0.144"
 walkdir = "2.*"
 my_err = {path = "../my_err"}
 druid-shell = "0.7.0"
-
+clap = "2.34.0"
 [[bin]]
 name = "doc_rust"
 [[bin]]
@@ -24,3 +24,5 @@ name = "git_clone"
 name = "suf_len"
 [[bin]]
 name = "ccc"
+[[bin]]
+name = "cnt_size"
