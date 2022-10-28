@@ -25,6 +25,7 @@ name = "cp_bin"
 name = "git_clone"
 [[bin]]
 name = "suf_len"
+
 [[bin]]
 name = "ccc"
 [[bin]]
