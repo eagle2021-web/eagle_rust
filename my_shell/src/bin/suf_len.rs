@@ -79,7 +79,6 @@ fn search(args: &Args) -> Vec<PathBuf> {
 mod tests{
     use std::path::PathBuf;
     use std::str::FromStr;
-    use my_err::parse_i32;
 
     #[test]
     fn test_ends_with() {
@@ -91,12 +90,4 @@ mod tests{
         assert!(b);
     }
 
-    #[test]
-    fn test_parse_i32() {
-        match parse_i32("s1") {
-            Ok(n) => println!("{}", n),
-            Err(err) => println!("Error: {:?}", err),
-        }
-        assert!(parse_i32("11").is_ok());
-    }
 }

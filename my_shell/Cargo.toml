@@ -16,7 +16,7 @@ druid-shell = "0.7.0"
 clap = "2.34.0"
 itertools = "0.10.5"
 common_utils = {path="../common_utils"}
-
+num_cpus = "1.13.1"
 [[bin]]
 name = "doc_rust"
 [[bin]]

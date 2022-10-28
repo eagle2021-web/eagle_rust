@@ -323,6 +323,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "clap"
+version = "4.0.18"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "335867764ed2de42325fafe6d18b8af74ba97ee0c590fa016f157535b42ab04b"
+dependencies = [
+ "atty",
+ "bitflags",
+ "clap_lex",
+ "strsim 0.10.0",
+ "termcolor",
+]
+
+[[package]]
+name = "clap_lex"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0d4198f73e42b4936b35b5bb248d81d2b595ecb170da0bac7655c54eedfa8da8"
+dependencies = [
+ "os_str_bytes",
+]
+
+[[package]]
 name = "cloudabi"
 version = "0.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -642,7 +664,7 @@ dependencies = [
 name = "deep"
 version = "0.1.0"
 dependencies = [
- "clap",
+ "clap 4.0.18",
  "my_err",
  "rand 0.8.5",
  "trust-dns",
@@ -1838,12 +1860,13 @@ dependencies = [
 name = "my_shell"
 version = "0.1.0"
 dependencies = [
- "clap",
+ "clap 2.34.0",
  "common_utils",
  "docopt",
  "druid-shell",
  "itertools 0.10.5",
  "my_err",
+ "num_cpus",
  "serde",
  "serde_json",
  "walkdir",
@@ -2078,6 +2101,12 @@ dependencies = [
  "log",
  "winapi 0.3.9",
 ]
+
+[[package]]
+name = "os_str_bytes"
+version = "6.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3baf96e39c5359d2eb0dd6ccb42c62b91d9678aa68160d261b9e0ccbf9e9dea9"
 
 [[package]]
 name = "pango"
@@ -3068,6 +3097,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "termcolor"
+version = "1.1.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bab24d30b911b2376f3a13cc2cd443142f0c81dda04c118693e35b3835757755"
+dependencies = [
+ "winapi-util",
+]
+
+[[package]]
 name = "textwrap"
 version = "0.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3746,6 +3784,10 @@ name = "version_check"
 version = "0.9.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
+
+[[package]]
+name = "vs_code"
+version = "0.1.0"
 
 [[package]]
 name = "walkdir"

@@ -23,7 +23,8 @@ members = [
     "life_time",
     "deep",
     "leetcode",
-    "bit_op"
+    "bit_op",
+    "vs_code"
 ]
 
 [profile.dev]
