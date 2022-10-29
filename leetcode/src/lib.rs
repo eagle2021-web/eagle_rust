@@ -10,18 +10,6 @@ pub struct Solution {
     pub n: usize,
 }
 
-pub fn count_bit(n: usize) -> usize {
-    let mut res = 0_usize;
-    let mut n = n;
-    while n != 0 {
-        let cnt = n & 1;
-        n >>= 1;
-        if cnt == 1 {
-            res += 1;
-        }
-    }
-    res
-}
 
 pub fn dfs2(row: usize, col: usize, pie: usize, na: usize, n: usize, mask: usize, record: &mut Vec<usize>, res: &mut Vec<Vec<String>>) {
     if row == n {
@@ -67,14 +55,6 @@ mod tests {
     }
 
     #[test]
-    fn it_works2() {
-        let a = 8;
-        let b = !a;
-        let c = 15 & b;
-        println!("c = {:?}", c);
-    }
-
-    #[test]
     fn it_works3() {
         let a = 1;
         let b = a & (a - 1);
@@ -82,8 +62,8 @@ mod tests {
         println!("b = {:?}", b);
         println!("c = {:?}", c);
 
-        assert_eq!(count_bit(7), 3);
-        assert_eq!(count_bit(5), 2);
-        assert_eq!(count_bit(1), 1);
+        assert_eq!(7_usize.count_ones(), 3);
+        assert_eq!(6_i32.count_ones(), 2);
+        assert_eq!(1_usize.count_ones(), 1);
     }
 }
