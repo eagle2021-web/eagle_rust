@@ -24,7 +24,6 @@ members = [
     "deep",
     "leetcode",
     "bit_op",
-    "vs_code"
 ]
 
 [profile.dev]
