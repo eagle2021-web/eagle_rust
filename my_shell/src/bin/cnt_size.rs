@@ -1,12 +1,9 @@
-use std::fmt::{Debug, format};
 use std::fs;
-use std::fs::File;
-use std::io::Seek;
-use std::mem::replace;
 use std::path::{Path, PathBuf};
 use clap::{App, Arg};
 use itertools::Itertools;
-use common_utils::{replace_str};
+use std::fmt::Debug;
+use common_utils::replace_str;
 fn main() {
     let app = App::new("cnt_size")
         .about("count dir size")
@@ -29,15 +26,13 @@ fn cnt_dir_size<P>(p: P, path_list: &mut Vec<(usize, PathBuf)>)
                    -> usize where P: AsRef<Path> + Debug + Into<PathBuf> {
     let mut cnt = 0;
 
-    let mut d = walkdir::WalkDir::new(&p)
+    let it = walkdir::WalkDir::new(&p)
         .max_depth(1)
-        .min_depth(1);
-    let mut it = d.into_iter();
-    // it.skip_current_dir();
+        .min_depth(1)
+        .into_iter();
     for a in it {
-        let a = a.unwrap();
-        let sub_path = a.path().clone();
-        // println!("sub_path = {:?}", sub_path);
+        let dir = a.unwrap();
+        let sub_path = dir.path().clone();
         if sub_path.is_dir() {
             cnt += cnt_dir_size(sub_path, path_list);
         } else {
@@ -62,4 +57,16 @@ fn echo_size(cnt: usize) {
     let suf = candidates[index];
     let s = format!("{}{}", cnt, suf);
     println!("size = {}", s);
+}
+
+#[cfg(test)]
+mod test {
+    #[test]
+    fn test_cpu_num() {
+        let num = num_cpus::get();
+        println!("cpu_num = {}", num);
+        let num = num_cpus::get_physical();
+        println!("cpu_physical_num =  {num}");
+    }
+
 }
