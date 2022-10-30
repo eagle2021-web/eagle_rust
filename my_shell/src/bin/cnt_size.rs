@@ -61,6 +61,11 @@ fn echo_size(cnt: usize) {
 
 #[cfg(test)]
 mod test {
+    use rayon::prelude::*;
+    use std::fs;
+    use test_cfg::project_root;
+
+
     #[test]
     fn test_cpu_num() {
         let num = num_cpus::get();
@@ -69,4 +74,36 @@ mod test {
         println!("cpu_physical_num =  {num}");
     }
 
+    #[test]
+    fn test_a() {
+        let path = project_root();
+        let p = path.join("my_shell/src/bin/cnt_size.rs");
+        let p2 = path.join("my_shell/src/bin/cp_bin.rs");
+        let input = vec![p, p2];
+        input
+        .par_iter()
+        .for_each(|sub_path| {
+            let f = fs::File::open(sub_path).expect("open file err");
+            let cnt = f.metadata().expect("read metadata err").len() as usize;
+            println!("{cnt}");
+        })
+        ;
+    }
+
+    #[test]
+    fn test_b() {
+        let p = project_root();
+
+        let dir = walkdir::WalkDir::new(p)
+            .min_depth(1)
+            .max_depth(100);
+        let mut arr = vec![];
+        for v in dir.into_iter() {
+            if let Ok(a) = v {
+                arr.push(a.file_name().to_os_string());
+            }
+        }
+        print!("len = {}", arr.len());
+
+    }
 }

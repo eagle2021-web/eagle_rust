@@ -17,6 +17,9 @@ clap = "2.34.0"
 itertools = "0.10.5"
 common_utils = {path="../common_utils"}
 num_cpus = "1.13.1"
+rayon = "1.5.3"
+test_cfg = {path = "../test_cfg"}
+
 [[bin]]
 name = "doc_rust"
 [[bin]]
@@ -25,7 +28,6 @@ name = "cp_bin"
 name = "git_clone"
 [[bin]]
 name = "suf_len"
-
 [[bin]]
 name = "ccc"
 [[bin]]
