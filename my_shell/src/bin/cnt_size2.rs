@@ -3,6 +3,7 @@ use std::path::{Path, PathBuf};
 use clap::{App, Arg};
 use itertools::Itertools;
 use std::fmt::Debug;
+use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use common_utils::replace_str;
 use test_cfg::project_root;
 
@@ -14,6 +15,7 @@ fn main() {
         .get_matches();
     let root_dir = app.value_of("root").expect("no root arg");
     let start = chrono::Local::now();
+    // let root_dir = "C:/Users/12807";
     // let mut path_list = vec![];
     let dir = walkdir::WalkDir::new(&root_dir)
         .min_depth(1)
@@ -26,7 +28,7 @@ fn main() {
             }
         }
     }
-    let cnt: usize = arr.iter().map(|sub_path| {
+    let cnt: usize = arr.par_iter().map(|sub_path| {
         let f = fs::File::open(sub_path);
         let mut cnt = 0;
         match f {
@@ -47,21 +49,16 @@ fn cnt_dir_size<P>(p: P, path_list: &mut Vec<(usize, PathBuf)>)
 
     let it = walkdir::WalkDir::new(&p)
         .max_depth(1)
-        .min_depth(100)
+        .min_depth(1)
         .into_iter();
     for a in it {
         let dir = a.unwrap();
         let sub_path = dir.path().clone();
         if sub_path.is_dir() {
-            // cnt += cnt_dir_size(sub_path, path_list);
+            cnt += cnt_dir_size(sub_path, path_list);
         } else {
-            let f = fs::File::open(sub_path);
-            match f {
-                Ok(f2) => {
-                    cnt += f2.metadata().expect("read metadata err").len() as usize
-                }
-                Err(_) => {}
-            }
+            let f = fs::File::open(sub_path).expect("open file err");
+            cnt += f.metadata().expect("read metadata err").len() as usize;
         }
     }
     let pb: PathBuf = p.into();
