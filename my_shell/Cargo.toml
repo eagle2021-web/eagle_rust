@@ -32,11 +32,3 @@ name = "suf_len"
 name = "ccc"
 [[bin]]
 name = "cnt_size"
-[[bin]]
-name = "cnt_size2"
-
-[profile.dev]
-opt-level = 0
-
-[profile.release]
-opt-level = 3

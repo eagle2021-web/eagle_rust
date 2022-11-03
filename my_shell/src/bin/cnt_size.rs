@@ -3,6 +3,8 @@ use std::path::{Path, PathBuf};
 use clap::{App, Arg};
 use itertools::Itertools;
 use std::fmt::Debug;
+use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
+use walkdir::DirEntry;
 use common_utils::replace_str;
 use test_cfg::project_root;
 
@@ -11,13 +13,15 @@ fn main() {
         .about("count dir size")
         .arg(Arg::with_name("root").short("r")
             .default_value("./"))
+        .arg(Arg::with_name("par").short("-p")
+            .default_value("true"))
         .get_matches();
     let root_dir = app.value_of("root").expect("no root arg");
+    let par = app.value_of("par").expect("no par arg");
+    let par: bool = par.parse().expect("not bool");
+
     let start = chrono::Local::now();
-    // let mut path_list = vec![];
-    let dir = walkdir::WalkDir::new(&root_dir)
-        .min_depth(1)
-        .max_depth(100);
+    let dir = walkdir::WalkDir::new(&root_dir);
     let mut arr = vec![];
     for v in dir.into_iter() {
         if let Ok(p) = v {
@@ -26,47 +30,33 @@ fn main() {
             }
         }
     }
-    let cnt: usize = arr.iter().map(|sub_path| {
-        let f = fs::File::open(sub_path);
-        let mut cnt = 0;
-        match f {
-            Ok(f2) => {cnt = f2.metadata().expect("read metadata err").len() as usize}
-            Err(_) => {}
-        }
-        cnt
-    }).sum();
-    // arr.iter().for_each(|v| println!("{:?}", v));
+    let cnt;
+    if par {
+        cnt = cnt_par(arr);
+    } else {
+        cnt = cnt_single(arr);
+    }
     echo_size(cnt);
     let end = chrono::Local::now();
     println!("{}", end - start);
 }
 
-fn cnt_dir_size<P>(p: P, path_list: &mut Vec<(usize, PathBuf)>)
-                   -> usize where P: AsRef<Path> + Debug + Into<PathBuf> {
-    let mut cnt = 0;
 
-    let it = walkdir::WalkDir::new(&p)
-        .max_depth(1)
-        .min_depth(100)
-        .into_iter();
-    for a in it {
-        let dir = a.unwrap();
-        let sub_path = dir.path().clone();
-        if sub_path.is_dir() {
-            // cnt += cnt_dir_size(sub_path, path_list);
-        } else {
-            let f = fs::File::open(sub_path);
-            match f {
-                Ok(f2) => {
-                    cnt += f2.metadata().expect("read metadata err").len() as usize
-                }
-                Err(_) => {}
-            }
-        }
+fn cnt_file(sub_path: &PathBuf) -> usize {
+    let f = fs::File::open(sub_path);
+    let mut cnt = 0;
+    match f {
+        Ok(f2) => { cnt = f2.metadata().expect("read metadata err").len() as usize }
+        Err(_) => {}
     }
-    let pb: PathBuf = p.into();
-    path_list.push((cnt, pb));
-    return cnt;
+    cnt
+}
+fn cnt_single(arr: Vec<PathBuf>) -> usize {
+    arr.iter().map(cnt_file).sum()
+}
+
+fn cnt_par(arr: Vec<PathBuf>) -> usize {
+    arr.par_iter().map(cnt_file).sum()
 }
 
 fn echo_size(cnt: usize) {
@@ -105,12 +95,12 @@ mod test {
         let p2 = path.join("my_shell/src/bin/cp_bin.rs");
         let input = vec![p, p2];
         input
-        .par_iter()
-        .for_each(|sub_path| {
-            let f = fs::File::open(sub_path).expect("open file err");
-            let cnt = f.metadata().expect("read metadata err").len() as usize;
-            println!("{cnt}");
-        })
+            .par_iter()
+            .for_each(|sub_path| {
+                let f = fs::File::open(sub_path).expect("open file err");
+                let cnt = f.metadata().expect("read metadata err").len() as usize;
+                println!("{cnt}");
+            })
         ;
     }
 
