@@ -24,7 +24,8 @@ members = [
     "deep",
     "leetcode",
     "bit_op",
-    "test_cfg"
+    "test_cfg",
+    "docker_lib"
 ]
 
 [profile.dev]
