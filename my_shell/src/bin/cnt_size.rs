@@ -1,12 +1,7 @@
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 use clap::{App, Arg};
-use itertools::Itertools;
-use std::fmt::Debug;
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
-use walkdir::DirEntry;
-use common_utils::replace_str;
-use test_cfg::project_root;
 
 fn main() {
     let app = App::new("cnt_size")
