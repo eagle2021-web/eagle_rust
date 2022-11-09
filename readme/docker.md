@@ -39,3 +39,12 @@ EXPOSE  22
 EXPOSE  80
 CMD     /usr/sbin/sshd -D
 ```
+
+```shell
+wget https://nchc.dl.sourceforge.net/project/netcat/netcat/0.7.1/netcat-0.7.1.tar.gz
+./configure
+make && make install 
+
+docker run -d -i -p 1234:1234 --name daemon ubuntu netcat -l 1234
+docker run -d -i -p 1234:1234 --name daemon2 ubuntu "/usr/local/bin/nc -l 1234"
+```
