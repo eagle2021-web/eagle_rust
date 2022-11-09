@@ -7,5 +7,5 @@ pub struct AppState {
 
 pub struct AppState2 {
     pub health_check_response: String,
-    pub visit_count: Mutex<u32>
+    pub visit_count: Mutex<u8>
 }

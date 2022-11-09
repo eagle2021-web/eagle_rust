@@ -1,8 +1,12 @@
 use std::io;
 use std::sync::Mutex;
 use actix_web::{App, HttpResponse, HttpServer, Responder, web};
+use serde::{Deserialize, Serialize};
 use crate::state::{AppState, AppState2};
-
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Student {
+    name: String
+}
 
 mod state;
 
@@ -11,9 +15,14 @@ pub fn general_routes(cfg: &mut web::ServiceConfig) {
     // cfg.route("/health", web::get().to(health_check_handler));
     cfg.service(web::scope("/health")
         .route("", web::get().to(health_check_handler))
+        .route("/student", web::post().to(student_handler))
     );
 }
-
+pub async fn student_handler(student: web::Json<Student>) -> impl Responder {
+    println!("student = {:?}", student);
+    
+    HttpResponse::Ok().json("ok")
+}
 pub async fn health_check_handler(app_state: web::Data<AppState>,
                                   app_state2: web::Data<AppState2>) -> impl Responder {
     let health_check_response = &app_state.health_check_response;
