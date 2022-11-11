@@ -133,11 +133,12 @@ mod tests {
             });
         }).unwrap();
         println!("==========");
-        drop(snd);
-        for i in rcv {
-            // let msg = rcv.recv().unwrap();
-            println!("Received {}", i);
-        }
+        let b:i32 = (0..50000).sum();
+        let a: i32 = rcv.try_iter().collect::<Vec<i32>>().iter().sum();
+        assert_eq!(a, b);
+        snd.send(1).unwrap();
+        let a = rcv.recv().unwrap();
+        println!("{a}");
     }
 
     #[test]
