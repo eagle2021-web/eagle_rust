@@ -28,6 +28,7 @@ use serde_json::{json, Value};
 use std::sync::{Arc, mpsc, Mutex};
 use std::sync::mpsc::Sender;
 use std::time::Duration;
+use common_utils::replace_str;
 
 #[derive(serde::Deserialize, Debug)]
 pub struct Args {
@@ -102,15 +103,19 @@ fn clone_one(sender: &Sender<Value>, value: &Value, args: &Arc<Args>) {
     let url = obj.get("url").expect("no url").as_str().expect("not str");
     let tag = obj.get("tag").expect("no tag").as_str().expect("not str");
     let path = url.replace("https://", &args.flag_dir);
-    let path_buf = PathBuf::from_str(&path).expect("not path");
+    let path_buf = PathBuf::from_str(&path)
+        .expect("not path")
+        .join(&tag);
     let mut js = value.clone();
+
+    js["clone_msg"] = json!("ok");
+    js["project_path"] = json!(replace_str(path_buf.to_str().unwrap()));
+
     if path_buf.exists() {
         if args.flag_clone_new {
             fs::remove_dir_all(path_buf).unwrap();
         } else {
             js["clone_ok"] = json!(0);
-            js["clone_msg"] = json!("ok");
-            js["project_path"] = json!(&path);
             sender.send(js).expect("err occurred about sent value");
             return;
         }
@@ -121,20 +126,16 @@ fn clone_one(sender: &Sender<Value>, value: &Value, args: &Arc<Args>) {
     // --depth 1 --branch <tag_name> <repo_url>
     let output = c.output().expect("no output");
     let code = output.status.code().unwrap_or(-1);
+    println!("output.status = {:?}", output.status);
+
+    js["clone_ok"] = json!(code);
 
     if code != 0 {
-        js["clone_ok"] = json!(code);
         unsafe {
             let msg = String::from_utf8_unchecked(output.stderr.clone());
             js["clone_msg"] = json!(&msg);
         }
-    } else {
-        js["clone_ok"] = json!(0);
-        js["clone_msg"] = json!("ok");
-        js["project_path"] = json!(&path);
     }
-
-    println!("output.status = {:?}", output.status);
     sender.send(js).expect("err occurred about sent value");
 }
 

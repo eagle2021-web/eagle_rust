@@ -13,6 +13,7 @@ make_answer!();
 struct Struct;
 
 #[derive(HelperAttr, Debug)]
+#[show_streams]
 struct Struct2 {
     #[helper] field: ()
 }
@@ -52,7 +53,7 @@ fn main() {
 
     assert_eq!(43, answer43());
     let s = Struct2{ field: () };
-    println!("{:?}", s);
+    println!("s = {:?}", s);
 
     let a = invoke3();
     Pancakes2222::hello_macro();

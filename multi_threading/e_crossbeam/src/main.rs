@@ -89,7 +89,7 @@ fn insert(fruit: &str) -> Result<(), &str> {
 fn compute_digest<P: AsRef<Path>>(filepath: P) -> Result<(Digest, P), std::io::Error> {
     let mut buf_reader = BufReader::new(File::open(&filepath)?);
     let mut context = ring::digest::Context::new(&SHA256);
-    let mut buffer = [0; 10240];
+    let mut buffer = [0; 1024];
 
     loop {
         let count = buf_reader.read(&mut buffer)?;
