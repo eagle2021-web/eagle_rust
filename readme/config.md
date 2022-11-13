@@ -6,7 +6,14 @@ replace-with = 'tuna'
 
 [source.tuna]
 registry = "https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git"
-```
+
+[alias]
+b = "build"
+t = "test"
+r = "run"
+rr = "run --release"
+br = "build --release"
+```      
 
 C:\Windows\System32\drivers\etc\hosts
 ```text

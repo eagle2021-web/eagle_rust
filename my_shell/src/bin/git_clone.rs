@@ -14,8 +14,7 @@ Options:
     --help, -h          Show this message.
     --source, -s N      source json path
     --dir, -d N         root dir which all repositories cloned in [default: d:/eagle_repos/]
-    --result, -r N      json path which result written into
-    --all-tags, -a      clone all tags
+    --result, -r N      json path which result written into [default: ./tmp22.json]
     --clone-new, -c     remove old project and clone new one
 ";
 
@@ -37,7 +36,6 @@ pub struct Args {
     flag_result: String,
     flag_dir: String,
     flag_thread_size: usize,
-    flag_all_tags: bool,
     flag_clone_new: bool
 }
 
@@ -87,14 +85,19 @@ fn clone_all(args: Args) {
     }
     drop(ts);
     let mut res = json!([]);
+    let mut ok = 0;
     for v in tr {
         res.as_array_mut().unwrap().push(v);
+        ok += 1;
+        println!("ok += 1, cur = {}", ok);
     }
 
     for handle in handles {
         handle.join().unwrap();
     }
 
+    println!("&args.flag_result = {:?}", &args.flag_result);
+    
     fs::write(&args.flag_result, res.to_string()).expect("Failed to write");
 }
 
@@ -110,22 +113,24 @@ fn clone_one(sender: &Sender<Value>, value: &Value, args: &Arc<Args>) {
 
     js["clone_msg"] = json!("ok");
     js["project_path"] = json!(replace_str(path_buf.to_str().unwrap()));
+    js["clone_ok"] = json!(0);
 
     if path_buf.exists() {
         if args.flag_clone_new {
-            fs::remove_dir_all(path_buf).unwrap();
+            fs::remove_dir_all(&path_buf).unwrap();
         } else {
-            js["clone_ok"] = json!(0);
             sender.send(js).expect("err occurred about sent value");
             return;
         }
     }
-
     let mut c = Command::new("git");
-    c.args(["clone", "--depth", "1", "--branch", tag, url, &path]);
+    c.args(["clone", "--depth", "1", "--branch", tag, url, path_buf.to_str().unwrap()]);
     // --depth 1 --branch <tag_name> <repo_url>
     let output = c.output().expect("no output");
     let code = output.status.code().unwrap_or(-1);
+
+    let path_str = replace_str(path_buf.to_str().unwrap());
+    println!("project_path = {}", path_str);
     println!("output.status = {:?}", output.status);
 
     js["clone_ok"] = json!(code);
@@ -144,9 +149,11 @@ pub fn git_cur_tag(path: &str) -> Option<String> {
     c.args(["-C", path, "branch"]);
     let output = c.output();
     if let Ok(o) = output {
+        println!("ok");
         let msg = String::from_utf8(o.stdout).unwrap();
         return Some(msg);
     }
+    println!("not ok");
     return None;
 }
 
@@ -155,6 +162,7 @@ mod tests {
     use crate::git_cur_tag;
 
     #[test]
+    #[ignore]
     fn test_git_cur_tag() {
         let p = "d:/tmp/gitee.com/egzosn/pay-java-parent";
         let a = git_cur_tag(p);
@@ -162,4 +170,6 @@ mod tests {
             println!("{}", a);
         }
     }
+
+
 }
