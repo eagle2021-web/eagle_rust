@@ -24,3 +24,8 @@ C:\Windows\System32\drivers\etc\hosts
 185.199.110.153 assets-cdn.github.com
 185.199.111.153 assets-cdn.github.com
 ```
+
+```shell
+export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
+export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
+```
