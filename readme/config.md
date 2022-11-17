@@ -29,3 +29,7 @@ C:\Windows\System32\drivers\etc\hosts
 export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
 export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 ```
+
+target/release/my_web >> 1.txt > 2&
+
+netstat -aon|findstr 808
