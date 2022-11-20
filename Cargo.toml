@@ -1,6 +1,5 @@
 [workspace]
 members = [
-    "web",
     "eagle_macro",
     "my_shell",
     "macro_consumer",
@@ -26,7 +25,8 @@ members = [
     "bit_op",
     "test_cfg",
     "docker_lib",
-    "my_web"
+    "my_web",
+    "my_yew"
 ]
 
 [profile.dev]

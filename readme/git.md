@@ -1,4 +1,4 @@
-```shell
+ ```shell
 echo "# eagle_python" >> README.md
 git init
 git add README.md
