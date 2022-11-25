@@ -25,8 +25,7 @@ members = [
     "bit_op",
     "test_cfg",
     "docker_lib",
-    "my_web",
-    "my_yew"
+    "my_web"
 ]
 
 [profile.dev]
