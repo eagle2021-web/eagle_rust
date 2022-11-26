@@ -1,4 +1,6 @@
-1.antd引入报错可能是版本问题 2.ant不能引入scss，需要引入css 2.<React.StrictMode>二次渲染
+1. antd引入报错可能是版本问题
+2. ant不能引入css，需要引入min.css
+3. <React.StrictMode>二次渲染
 
 ```tsx
 interface Props {
@@ -27,9 +29,12 @@ class A extends React.Component<Props, State> {
         1. 发送请求获取数据
         2. 处理数据（过滤、整理格式等）
         3. 操作DOM呈现页面 是一个将数据渲染为HTML试图的开源JavaScript库
-2. 2.谁开发的？
+2. 谁开发的？
 
- 由Facebook开发，且开源 起初由Facebook的软件工程师Jordan Walke创建 于2011年部署于Facebook的newsfeed 随后于2012年部署于Instagram 2013年5月宣布开源
+-  由Facebook开发，且开源
+- 起初由Facebook的软件工程师Jordan Walke创建 
+- 于2011年部署于Facebook的newsfeed 
+- 随后于2012年部署于Instagram 2013年5月宣布开源
 
 ##### 3.为什么要学？
 
@@ -45,9 +50,11 @@ document.getElementsByTagName('span')
 
 ##### 4.React的特点
 
-a).采用组件化模式、声明式编码，提高开发效率及组件复用率 b).在React Native中可以使用React语法进行移动端开发 c).使用虚拟DOM + 优秀的Diffing算法，尽量减少与真实DOM的交互
+1. 采用组件化模式、声明式编码，提高开发效率及组件复用率
+2. 在React Native中可以使用React语法进行移动端开发
+3. 使用虚拟DOM + 优秀的Diffing算法，尽量减少与真实DOM的交互
 
-5.学习React之前你要掌握的JavaScript基础知识
+##### 5.学习React之前你要掌握的JavaScript基础知识
 
 判断this的指向 class（类） ES6语法规范 npm包管理器 原型、原型链 数组常用方法 模块化
 
