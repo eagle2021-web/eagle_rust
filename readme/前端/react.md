@@ -31,9 +31,9 @@ class A extends React.Component<Props, State> {
         3. 操作DOM呈现页面 是一个将数据渲染为HTML试图的开源JavaScript库
 2. 谁开发的？
 
--  由Facebook开发，且开源
-- 起初由Facebook的软件工程师Jordan Walke创建 
-- 于2011年部署于Facebook的newsfeed 
+- 由Facebook开发，且开源
+- 起初由Facebook的软件工程师Jordan Walke创建
+- 于2011年部署于Facebook的newsfeed
 - 随后于2012年部署于Instagram 2013年5月宣布开源
 
 ##### 3.为什么要学？
@@ -117,15 +117,15 @@ document.getElementsByTagName('span')
     console.log('虚拟DOM = ' + VD);
     const RD = document.getElementById('title');
     console.log('真实DOM = ' + RD);
-    
+
     const d1 = [<div>111</div>, <div>222</div>]
-    const V2 = <h1 style={{color:'white'}}>aaa</h1>
+    const V2 = <h1 style={{color: 'white'}}>aaa</h1>
     const d3 = <div>{d1}</div>
     /*
        关于虚拟DOM：
-        1.本质是Object类型的对象（一般对象）
-        2.虚拟DOM比较轻，真实DOM比较重，因为虚拟DOM是React内部使用，无需真实DOM那么多的属性
-        3.虚拟DOM最终会被React转化为真实的DOM，呈现在页面上
+        1. 本质是Object类型的对象（一般对象）
+        2. 虚拟DOM比较轻，真实DOM比较重，因为虚拟DOM是React内部使用，无需真实DOM那么多的属性
+        3. 虚拟DOM最终会被React转化为真实的DOM，呈现在页面上
      */
 </script>
 </body>
@@ -139,11 +139,12 @@ document.getElementsByTagName('span')
 
 ##### jsx
 
-1. 
-
+1.
 
 ##### xml
+
 ```xml
+
 <student>
   <name>Tom</name>
   <age>18</age>
@@ -151,8 +152,12 @@ document.getElementsByTagName('span')
 ```
 
 ##### json
+
 ```json
-{"name": "Tome", "age": 19}
+{
+  "name": "Tome",
+  "age": 19
+}
 ```
 
 ##### jsx语法规则：
@@ -162,16 +167,18 @@ document.getElementsByTagName('span')
 3. 样式的类名指定不要用class，要用className
 4. 内联样式，要用style={{key: value}}的形式去写
 5. 只有一个跟标签
-6. 标签必须闭合 
+6. 标签必须闭合
 7. 标签首字母
     1. 若小写字母开头， 则将标签转为html中同名元素，若html中无该标签对应的同名元素，则报错
-    2. 若大写字母开头，react就去渲染对应的组件，若组件没有定义，则报错 
+    2. 若大写字母开头，react就去渲染对应的组件，若组件没有定义，则报错
 8. 语句和表达式
-   1. 表达式返回值
-   2. 语句无
+    1. 表达式返回值
+    2. 语句无
+
 ```html
+
 <Good>book</Good>
-<script >
+<script>
     let a = 1; //表达式
 </script>
 ```
