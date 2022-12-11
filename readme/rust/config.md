@@ -1,16 +1,6 @@
 编辑 ~/.cargo/config 文件，添加以下内容：
 
 ```text
-[http]
-# 代理设置
-proxy = "127.0.0.1:1080"
-check-revoke = false
-
-[https]
-# 代理设置
-proxy = "127.0.0.1:1080"
-check-revoke = false
-
 [source.crates-io]
 registry = "https://github.com/rust-lang/crates.io-index"
 
@@ -72,3 +62,7 @@ export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 target/release/my_web >> 1.txt > 2&
 
 netstat -aon|findstr 808
+yum -y update
+yum -y install openssh-server
+apt-get install -y openssl
+apt install pkg-config

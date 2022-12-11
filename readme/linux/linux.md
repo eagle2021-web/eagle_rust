@@ -1,4 +1,4 @@
-#同步文件
+# 同步文件
 
 https://www.baidu.com/
 
@@ -41,10 +41,7 @@ passwd -d lzx
 
 sudo vim /etc/hosts
 EXIT;
-#修改网络ip(不会的看视频)
-sudo vim /etc/sysconfig/network-scripts/ifcfg-ens33
-#修改网络ip方式2 例如里面里面的ip是192.168.100.153 替换称为192.168.100.156（机灵点）
-sudo sed -i 's#153#156#' /etc/sysconfig/network-scripts/ifcfg-ens33
+
 #修改主机名
 sudo hostnamectl set-hostname nacos-local
 sudo vim /etc/sudoers
@@ -96,3 +93,32 @@ known_hosts
 
 ```
 
+```shell
+#修改网络ip(不会的看视频)
+sudo vim /etc/sysconfig/network-scripts/ifcfg-ens33
+#修改网络ip方式2 例如里面里面的ip是192.168.100.153 替换称为192.168.100.156
+sudo sed -i 's#153#156#' /etc/sysconfig/network-scripts/ifcfg-ens33
+service network restart
+```
+
+```text
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=static
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=ens33
+UUID=ebdfc7e7-e5fe-4a68-88d0-40e18a9dc425
+DEVICE=ens33
+ONBOOT=yes
+IPADDR=192.168.0.106
+GATEWAY=192.168.0.2
+DNS1=192.168.0.2
+
+```

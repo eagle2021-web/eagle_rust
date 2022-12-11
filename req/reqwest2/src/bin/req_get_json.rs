@@ -33,27 +33,58 @@ async fn main() -> Result<(), reqwest::Error> {
     Ok(())
 }
 
+
 #[cfg(test)]
 mod tests {
     use std::fs;
     use reqwest;
+    use serde_json::json;
 
+    #[test]
+    fn test_1a() {
+        let s = r#"{"query":"\n    query recentAcSubmissions($userSlug: String!) {\n  recentACSubmissions(userSlug: $userSlug) {\n    submissionId\n    submitTime\n    question {\n      translatedTitle\n      titleSlug\n      questionFrontendId\n    }\n  }\n}\n    ","variables":{"userSlug":"ssshards"}}"#;
+        let mut s:serde_json::Value = serde_json::from_str(s).unwrap();
+        s["variables"]["userSlug"] = json!("eagle");
+        println!("s = {:?}", s);
+    }
     #[actix_rt::test]
     async fn test_a() {
-        let url = "https://item.jd.com/100031943534.html#none";
+        let s = r#"{"query":"\n    query recentAcSubmissions($userSlug: String!) {\n  recentACSubmissions(userSlug: $userSlug) {\n    submissionId\n    submitTime\n    question {\n      translatedTitle\n      titleSlug\n      questionFrontendId\n    }\n  }\n}\n    ","variables":{"userSlug":"ssshards"}}"#;
+        let s:serde_json::Value = serde_json::from_str(s).unwrap();
+        println!("s = {:?}", s);
+        let url = "https://leetcode.cn/graphql/noj-go/";
+        let text:serde_json::Value = reqwest::Client::builder()
+            .danger_accept_invalid_certs(true)
+            .no_proxy()
+            .build()
+            .unwrap()
+            .post(url)
+            .json(&s)
+            .send()
+            .await
+            .unwrap()
+            .json()
+            .await
+            .unwrap();
+        // println!("{:?}", text);
+        fs::write("tmp.json", text.to_string()).expect("Failed to write");
+    }
+
+    #[actix_rt::test]
+    async fn test_b() {
+        let u = "https://leetcode.cn/problems/binary-search/";
         let text = reqwest::Client::builder()
             .danger_accept_invalid_certs(true)
             .no_proxy()
             .build()
             .unwrap()
-            .get(url)
+            .get(u)
             .send()
             .await
             .unwrap()
             .text()
             .await
             .unwrap();
-        println!("{:?}", text);
         fs::write("tmp.html", text).expect("Failed to write");
     }
 }
