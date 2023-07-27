@@ -1,6 +1,10 @@
 ```shell
-VERSION_STRING=20.10.9
+VERSION_STRING=5:20.10.11~3-0~ubuntu-focal
 yum install docker-ce-${VERSION_STRING} docker-ce-cli-${VERSION_STRING} containerd.io
+sudo apt-get install docker-ce=<$VERSION_STRING> docker-ce-cli=<$VERSION_STRING> containerd.io
+
+sudo apt-get update
+sudo apt-get install docker-ce=5:20.10.7~3-0~ubuntu-focal docker-ce-cli=5:20.10.7~3-0~ubuntu-focal containerd.io
 ```
 
 ```shell
