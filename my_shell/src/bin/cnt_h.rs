@@ -33,7 +33,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut file = File::open(file_path)?;
 
     loop {
-        let mut buf = [0; 1024]; // 每块大小
+        let mut buf = [0; 1024 * 256]; // 每块大小
         let bytes_read = file.read(&mut buf)?;
         if bytes_read == 0 {
             break;

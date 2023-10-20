@@ -18,9 +18,8 @@ mod tests {
 
     #[test]
     fn test_replace() {
-        let s = "d:/eagle_repos/gitee.com/zengyong2020/web-editor-markdown.git\\v1.0.6";
+        let s:&str = "d:/eagle_repos/gitee.com/zengyong2020/web-editor-markdown.git\\v1.0.6";
         let s2 = replace_str(s);
         println!("s2 = {:?}", s2);
-        
     }
 }
