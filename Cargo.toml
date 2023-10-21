@@ -22,7 +22,6 @@ members = [
     "life_time",
     "deep",
     "leetcode",
-    "bit_op",
     "test_cfg",
     "docker_lib",
     "my_web",

@@ -1,8 +1,7 @@
 use std::env;
 use std::error::Error;
 use std::fs::File;
-use std::io::{self, Read, Write};
-use std::path::Path;
+use std::io::{Read, Write};
 use crypto_hash::{Algorithm, Hasher};
 
 const SUPPORTED_ALGORITHMS: [(Algorithm, &'static str); 4] = [
@@ -21,11 +20,11 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // 打开文件
     let file = File::open(file_path)?;
-    let file_size = file.metadata()?.len();
+    let _file_size = file.metadata()?.len();
 
     // 分块计算并输出所有哈希值
     let mut hashers = vec![];
-    for (algorithm, algorithm_name) in SUPPORTED_ALGORITHMS.iter() {
+    for (algorithm, _algorithm_name) in SUPPORTED_ALGORITHMS.iter() {
         let mut hasher = Hasher::new(*algorithm);
         hashers.push(hasher);
 

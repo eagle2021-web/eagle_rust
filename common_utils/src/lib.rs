@@ -8,6 +8,7 @@ pub fn replace_str(p: &str) -> String {
 
 #[cfg(test)]
 mod tests {
+    use std::path::PathBuf;
     use super::*;
 
     #[test]
@@ -19,7 +20,8 @@ mod tests {
     #[test]
     fn test_replace() {
         let s:&str = "d:/eagle_repos/gitee.com/zengyong2020/web-editor-markdown.git\\v1.0.6";
-        let s2 = replace_str(s);
-        println!("s2 = {:?}", s2);
+        let p_buf = PathBuf::from(s);
+        let p_path = p_buf.as_path();
+        let _os_str = p_path.as_os_str();
     }
 }
