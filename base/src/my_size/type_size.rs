@@ -1,14 +1,38 @@
+macro_rules! print_size {
+    ($($t:ty),+) => {
+        $(
+            println!("Size of {}: {} bytes", stringify!($t), std::mem::size_of::<$t>());
+        )+
+    };
+}
+
+macro_rules! assert_size {
+    ($type:ty, $expected:expr) => {
+        println!("Size of {}: {} bytes", stringify!($type), std::mem::size_of::<$type>());
+        assert_eq!($expected, std::mem::size_of::<$type>());
+    };
+}
+
+
 #[cfg(test)]
 mod test {
+    use std::cell::Cell;
     use std::mem;
+    use std::rc::Rc;
+    use std::sync::Mutex;
+
     #[test]
     fn test_write() {
-        println!("Size of i32: {} bytes", mem::size_of::<i32>());
-        println!("Size of f64: {} bytes", mem::size_of::<f64>());
-        println!("Size of char: {} bytes", mem::size_of::<char>());
-        println!("Size of &str: {} bytes", mem::size_of::<&str>());
-        // let s: str = "sdfdsafsadf";
-        // the trait `Sized` is not implemented for `str`
-        // println!("Size of &str: {} bytes", mem::size_of::<str>());
+        assert_size!(i32, 4);
+        assert_size!(i64, 8);
+        assert_size!(i64, 8);
+        assert_size!(char, 4);
+        assert_size!(&str, 16);
+        assert_size!(Cell<i32>, 4);
+        assert_size!(Cell<i64>, 8);
+        assert_size!(Rc<i32>, 8);
+        assert_size!(Rc<i64>, 8);
+        assert_size!(Rc<i8>, 8);
+        assert_size!(Mutex<i32>, 16);
     }
 }

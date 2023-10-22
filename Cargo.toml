@@ -25,7 +25,8 @@ members = [
     "test_cfg",
     "docker_lib",
     "my_web",
-    "base"
+    "base",
+    "wasm",
 ]
 
 [profile.dev]

@@ -5,7 +5,14 @@
 #### https://blog.csdn.net/K_Ohaha/article/details/105421601
 
 ```shell
-cargo new req
-cargo new req/reqwest2
-rustc 
+
+```
+
+### 切换nightly
+```shell
+# https://course.rs/test/benchmark.html
+rustup toolchain list
+rustup install nightly
+rustup override set nightly
+rustup override set stable
 ```

@@ -7,3 +7,6 @@ mod my_str;
 mod my_bit;
 #[path = "./my_channel/mod.rs"]
 mod my_channel;
+#[path = "./benches/mod.rs"]
+mod benches;
+
