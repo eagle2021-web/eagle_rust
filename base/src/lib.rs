@@ -7,6 +7,10 @@ mod my_str;
 mod my_bit;
 #[path = "./my_channel/mod.rs"]
 mod my_channel;
-#[path = "./benches/mod.rs"]
-mod benches;
+#[path = "./my_trait/mod.rs"]
+mod my_trait;
+#[path = "./my_dst/mod.rs"]
+mod my_dst;
+#[path = "./log_type/mod.rs"]
+mod log_type;
 
