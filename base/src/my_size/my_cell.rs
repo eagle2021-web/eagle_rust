@@ -6,5 +6,6 @@ mod test{
     fn test_cell(){
         assert_size!(Cell<i32>, 4);
         assert_size!(Cell<i8>, 1);
+        assert_size!(Cell<i64>, 1);
     }
 }

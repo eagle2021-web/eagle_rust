@@ -1,3 +1,6 @@
+#[path="./treenode.rs"]
+mod treenode;
+
 pub fn add(left: usize, right: usize) -> usize {
     left + right
 }
@@ -66,4 +69,119 @@ mod tests {
         assert_eq!(6_i32.count_ones(), 2);
         assert_eq!(1_usize.count_ones(), 1);
     }
+}
+use std::rc::Rc;
+use std::cell::RefCell;
+use std::collections::VecDeque;
+use std::ptr;
+use crate::treenode::TreeNode;
+
+impl Solution {
+    pub fn inorder_traversal(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
+        let mut v = vec![];
+        if root.is_none() {
+            return v;
+        }
+        let mut stk = VecDeque::new();
+        let ref_root = root.as_ref().unwrap();
+        let mut p = Some(Rc::clone(ref_root));
+        while !stk.is_empty() || p.is_some() {
+            while p.is_some() {
+                let node = p.unwrap();
+                stk.push_back(Some(Rc::clone(&node)));
+                p = node.borrow_mut().left.clone();
+            }
+            let top = stk.pop_back().unwrap();
+            let node = top.unwrap();
+            v.push(node.borrow().val);
+            p = node.borrow_mut().right.clone();
+        }
+        v
+    }
+
+
+    pub fn preorder_traversal(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
+        let mut v = vec![];
+        if root.is_none() {
+            return v;
+        }
+        let mut stk = Vec::new();
+        let ref_root = root.as_ref().unwrap();
+        let mut p = Some(Rc::clone(ref_root));
+        while !stk.is_empty() || p.is_some() {
+            if p.is_some() {
+                let node = p.unwrap();
+                v.push(node.borrow().val);
+                let right = node.borrow().right.clone();
+                if right.is_some() {
+                    stk.push(right);
+                }
+                p = node.borrow().left.clone();
+                continue;
+            }
+            let top = stk.pop().unwrap();
+            p = Some(top.unwrap().clone());
+
+        }
+        v
+    }
+
+    pub fn postorder_traversal(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
+        let mut v = vec![];
+        if root.is_none() {
+            return v;
+        }
+        let mut stk = Vec::new();
+        let ref_root = root.as_ref().unwrap();
+        let mut p = Some(Rc::clone(ref_root));
+        let mut prev = None;
+        while !stk.is_empty() || p.is_some() {
+            while p.is_some() {
+                let node = p.unwrap();
+                prev = Some(Rc::clone(&node));
+                stk.push(Some(Rc::clone(&node)));
+                p = node.borrow_mut().left.clone();
+            }
+            let top = stk.pop().unwrap();
+            let node = top.unwrap();
+            let right = node.borrow().right.clone();
+            if prev.is_none() || right.is_none() {
+                v.push(node.borrow().val);
+                prev = Some(Rc::clone(&node));
+                continue
+            }
+            let prev_node = prev.unwrap();
+            let prev_node_ref = prev_node.as_ptr();
+            let right_node = right.unwrap();
+            let right_node_ref = right_node.as_ptr();
+            if ptr::eq(right_node_ref, prev_node_ref){
+                v.push(node.borrow().val);
+                prev = Some(Rc::clone(&node));
+                continue
+            }
+            stk.push(Some(Rc::clone(&node)));
+            prev = Some(Rc::clone(&node));
+            p = node.borrow_mut().right.clone();
+        }
+        v
+    }
+}
+#[test]
+fn testa(){
+    let a = TreeNode{
+        val: 0,
+        left: None,
+        right: None,
+    };
+    let b = TreeNode{
+        val: 0,
+        left: None,
+        right: None,
+    };
+    let c = Rc::new(a);
+    let d = Rc::clone(&c);
+    println!( "{}", ptr::eq(&c, &d));
+    // let c = Some(a);
+    // let d: Option<TreeNode> = None;
+    // println!( "{}", ptr::eq(&c, &d));
 }
