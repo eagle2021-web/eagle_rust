@@ -1,17 +1,3 @@
-macro_rules! print_size {
-    ($($t:ty),+) => {
-        $(
-            println!("Size of {}: {} bytes", stringify!($t), std::mem::size_of::<$t>());
-        )+
-    };
-}
-
-macro_rules! assert_size {
-    ($type:ty, $expected:expr) => {
-        println!("Size of {}: {} bytes", stringify!($type), std::mem::size_of::<$type>());
-        assert_eq!(std::mem::size_of::<$type>(), $expected);
-    };
-}
 
 
 #[cfg(test)]
@@ -21,6 +7,7 @@ mod test {
     use std::mem::size_of;
     use std::rc::Rc;
     use std::sync::Mutex;
+    use crate::assert_size;
 
     #[test]
     fn test_write() {
