@@ -1,3 +1,5 @@
+mod sleep_future;
+
 #[cfg(test)]
 mod test{
     use std::sync::Arc;
