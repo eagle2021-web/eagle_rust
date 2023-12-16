@@ -20,8 +20,8 @@ impl Bird for Swan {
         println!("swan = {}", "fly");
     }
     fn chirp(&self){
-        let a = 112;
-        let b = vec![1212, 12,12213];
+        let _a = 112;
+        let _b = vec![1212, 12,12213];
         println!("swan = {}", "chirp11111111111111111111111111");
     }
 }

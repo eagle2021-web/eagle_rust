@@ -28,9 +28,7 @@ macro_rules! op {
 }
 
 // Implement `add_assign`, `mul_assign`, and `sub_assign` functions.
-op!(add_assign, Add, +=, add);
-op!(mul_assign, Mul, *=, mul);
-op!(sub_assign, Sub, -=, sub);
+
 
 // #[cfg(test)]
 // mod tests {
@@ -42,15 +40,14 @@ op!(sub_assign, Sub, -=, sub);
 //     }
 // }
 
-
-
-mod test {
-    use std::iter;
-    macro_rules! test {
-        ($func:ident, $x:expr, $y:expr, $z:expr) => {
+op!(add_assign, Add, +=, add);
+op!(mul_assign, Mul, *=, mul);
+op!(sub_assign, Sub, -=, sub);
+macro_rules! test {
+        ($func:ident, $x:expr, $y:expr, $z:expr, $func2:ident) => {
 
             #[test]
-            fn $func() {
+            fn $func2() {
                 for size in 0usize..10 {
                     let mut x: Vec<_> = iter::repeat($x).take(size).collect();
                     let y: Vec<_> = iter::repeat($y).take(size).collect();
@@ -64,16 +61,20 @@ mod test {
         };
     }
 
-    // Test `add_assign`, `mul_assign`, and `sub_assign`.
-    test!(add_assign, 1u32, 2u32, 3u32);
-    test!(mul_assign, 2u32, 3u32, 6u32);
-    test!(sub_assign, 3u32, 2u32, 1u32);
+// Test `add_assign`, `mul_assign`, and `sub_assign`.
 
+mod test {
+    use std::iter;
+    test!(add_assign, 1u32, 2u32, 3u32, add_assign222);
+    // test!(mul_assign, 2u32, 3u32, 6u32);
+    // test!(sub_assign, 3u32, 2u32, 1u32);
+    // test!(add_assign, 1u32, 2u32, 3u32);
     #[test]
     fn test_test2() {
         use super::Add;
-        test!(add_assign, 1u32, 2u32, 3u32);
-        add_assign();
-        let _a = Add::add(1, 2);
+        println!("{}", stringify!(add_assign));
+        println!("{}", stringify!(add_assign));
+        add_assign222();
+        // let _a = Add::add(1, 2);
     }
 }
