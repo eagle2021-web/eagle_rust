@@ -12,21 +12,44 @@ fn seek<'a>(name: &'a str, tx: &Sender<&'a str>, rx: &Receiver<&'a str>) {
 
 #[cfg(test)]
 mod test {
-
+    use std::thread::sleep;
+    use std::time::Duration;
     use super::select;
     use super::seek;
     #[test]
     fn test_take_tx() {
-        let people = vec!["Anna", "Bob", "Cody", "Dave", "Eva"];
-        let (tx, rx) = crossbeam::channel::bounded(1); // Make room for one unmatched send.
+        let people = vec!["Anna", "Bob", "Cody", "Dave", "Eva", "eagle", "wy", "ggb", "zyx"];
+        let (tx, rx) = crossbeam::channel::bounded(4); // Make room for one unmatched send.
         let (tx, rx) = (&tx, &rx);
         crossbeam::scope(|s| {
             for name in people {
-                s.spawn(move |_| seek(name, tx, rx));
+                s.spawn(|_| seek(name, tx, rx));
             }
         });
+
         if let Ok(name) = rx.try_recv() {
-            println!("No one received {}’s message.", name);
+            println!("{}'s message left in channel.", name);
+        }
+    }
+
+    #[test]
+    fn test_scope_sleep(){
+        let people = vec!["Anna", "Bob", "Cody", "Dave", "Eva", "eagle", "wy", "ggb", "zyx"
+        ,"Anna", "Bob", "Cody", "Dave", "Eva", "eagle", "wy", "ggb", "zyx"];
+        let (tx, rx ) = crossbeam::channel::bounded(2);
+        let (tx2, rx2) = (&tx, &rx);
+        crossbeam::scope(|s| {
+            for name in people {
+                s.spawn(|_| {
+                    seek(name, &tx, &rx);
+                    // sleep(Duration::from_secs(2));
+                    println!("Hello, I'm thread: {:?}", std::thread::current().id());
+                });
+            }
+        });
+
+        if let Ok(name) = rx.try_recv() {
+            println!("{}'s message left in channel.", name);
         }
     }
     #[test]

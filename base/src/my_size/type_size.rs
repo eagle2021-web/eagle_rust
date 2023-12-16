@@ -1,5 +1,12 @@
+// #[repr(C)]
+struct A{
+    i: i8,
+    a: i16,
 
-
+    b: i8,
+    c: i8,
+    d: i32,
+}
 #[cfg(test)]
 mod test {
     use std::cell::Cell;
@@ -8,7 +15,28 @@ mod test {
     use std::rc::Rc;
     use std::sync::Mutex;
     use crate::assert_size;
+    use super::A;
 
+    #[test]
+    fn test_print_a_ptr(){
+        let a = A {
+            i: 1,
+            a: 2,
+            b: 3,
+            c: 4,
+            d:5
+        };
+        let ptr_a = &a as *const A;
+
+        unsafe {
+            println!("Address of i: {:p}", &(*ptr_a).i);
+            println!("Address of a: {:p}", &(*ptr_a).a);
+            println!("Address of b: {:p}", &(*ptr_a).b);
+            println!("Address of c: {:p}", &(*ptr_a).c);
+            println!("Address of d: {:p}", &(*ptr_a).d);
+        }
+        assert_size!(A, 6);
+    }
     #[test]
     fn test_write() {
         assert_size!(i32, 4);
@@ -54,7 +82,10 @@ mod test {
     ///
     #[test]
     fn test_option_size() {
+
+        // assert_size!(A, 6);
         assert_size!(Option<isize>, 16);
+        assert_size!(isize, 8);
         assert_size!(Option<i8>, 2);
         assert_size!(Option<i16>, 4);
         assert_size!(Option<i32>, 8);

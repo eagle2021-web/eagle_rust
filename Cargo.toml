@@ -27,7 +27,7 @@ members = [
     "docker_lib",
     "my_web",
     "base",
-    "wasm",
+    "wasm"
 ]
 
 [profile.dev]

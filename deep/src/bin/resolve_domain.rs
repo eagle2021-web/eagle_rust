@@ -15,7 +15,9 @@ fn main() -> Result<(), EagleErr> {
         .arg(Arg::with_name("dns-server").short("s")
             .default_value("8.8.8.8"))
         .arg(Arg::with_name("domain-name")
-            .required(true))
+            .default_value("www.baidu.com")
+            // .required(true)
+        )
         .get_matches();
     let domain_name_raw = app                         // <1>
         .value_of("domain-name").unwrap();              // <1>
@@ -44,6 +46,8 @@ fn main() -> Result<(), EagleErr> {
     msg.emit(&mut encoder).unwrap();
     let localhost = UdpSocket::bind("0.0.0.0:0")      // <7>
         .expect("cannot bind to local socket");
+    // println!("localhost: {:?}", localhost.)
+
     let timeout = Duration::from_secs(30);
     localhost.set_read_timeout(Some(timeout)).unwrap();
     localhost.set_nonblocking(false).unwrap();

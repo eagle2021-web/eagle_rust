@@ -4,7 +4,7 @@ use std::fs::File;
 use std::io::{Read, Write};
 use crypto_hash::{Algorithm, Hasher};
 
-const SUPPORTED_ALGORITHMS: [(Algorithm, &'static str); 4] = [
+const SUPPORTED_ALGORITHMS: [(Algorithm, &str); 4] = [
     (Algorithm::MD5, "MD5"),
     (Algorithm::SHA1, "SHA-1"),
     (Algorithm::SHA256, "SHA-256"),
@@ -38,7 +38,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             break;
         }
         for hasher in &mut hashers {
-            hasher.write(&buf[..bytes_read]);
+            let _ = hasher.write(&buf[..bytes_read]);
         }
         // 在内循环中更新哈希值
     }
