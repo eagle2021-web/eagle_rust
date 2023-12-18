@@ -19,3 +19,6 @@ rustup override set stable
 
 ### 宏教學
 https://zjp-cn.github.io/tlborm/
+
+### 下载安装init慢问题
+
