@@ -70,7 +70,7 @@ mod tests {
     #[tokio::test] // 使用 tokio 的测试属性
     async fn test_one() {
         let a = 1;
-        SleepFuture::new(Duration::from_secs(1)).await;
+        SleepFuture::new(Duration::from_secs(11)).await;
         println!("{} = 1", a);
     }
 }

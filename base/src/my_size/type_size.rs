@@ -2,9 +2,8 @@
 struct A{
     i: i8,
     a: i16,
-
     b: i8,
-    c: i8,
+    c: i16,
     d: i32,
 }
 #[cfg(test)]
@@ -13,7 +12,7 @@ mod test {
     use std::mem;
     use std::mem::size_of;
     use std::rc::Rc;
-    use std::sync::Mutex;
+    use std::sync::{Arc, Mutex};
     use crate::assert_size;
     use super::A;
 
@@ -35,7 +34,7 @@ mod test {
             println!("Address of c: {:p}", &(*ptr_a).c);
             println!("Address of d: {:p}", &(*ptr_a).d);
         }
-        assert_size!(A, 6);
+        assert_size!(A, 12); // a c放在前面
     }
     #[test]
     fn test_write() {
@@ -49,6 +48,7 @@ mod test {
         assert_size!(Rc<i32>, 8);
         assert_size!(Rc<i64>, 8);
         assert_size!(Rc<i8>, 8);
+        assert_size!(Arc<i8>, 8);
         assert_size!(Mutex<i32>, 16);
         assert_size!(Option<isize>, 16);
         assert_size!(Option<i8>, 2);
@@ -58,6 +58,8 @@ mod test {
         assert_size!(Option<i128>, 24);
         assert_size!(&isize, 8);
         assert_size!(Option<&isize>, 8);
+        assert_size!(Option<&i8>, 8);
+        assert_size!(Option<&u16>, 8);
         assert_size!(Box<isize>, 8);
         assert_size!(Box<&isize>, 8);
         assert_size!(*const isize, 8);

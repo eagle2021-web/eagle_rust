@@ -25,9 +25,10 @@ members = [
     "leetcode",
     "test_cfg",
     "docker_lib",
-    "my_web",
+    "guantingxin",
     "base",
-    "wasm"
+    "wasm",
+    "my_tools"
 ]
 
 [profile.dev]

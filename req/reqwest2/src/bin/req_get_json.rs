@@ -9,8 +9,8 @@ async fn main() -> Result<(), reqwest::Error> {
         Some(s) => s
     };
     let js: serde_json::Value = reqwest::Client::builder()
-        .danger_accept_invalid_certs(true)
-        .no_proxy()
+        // .danger_accept_invalid_certs(true)
+        // .no_proxy()
         .build()
         .unwrap()
         .get(url)

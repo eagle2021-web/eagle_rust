@@ -39,5 +39,8 @@ mod test {
         }
         assert!(b.is_some());
         assert_eq!(a, b.unwrap());
+        let b = "dsf";
+        let c: &str = b.as_ref();
+        let d: &str = c.as_ref();
     }
 }
