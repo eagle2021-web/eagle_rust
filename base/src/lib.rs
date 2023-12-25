@@ -17,4 +17,7 @@ mod log_type;
 mod my_drop;
 #[path = "./my_feature/mod.rs"]
 mod my_feature;
+#[path = "./my_heap/mod.rs"]
+mod my_heap;
+mod my_memory;
 

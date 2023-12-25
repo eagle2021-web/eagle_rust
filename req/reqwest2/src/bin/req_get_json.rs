@@ -43,17 +43,18 @@ mod tests {
     #[test]
     fn test_1a() {
         let s = r#"{"query":"\n    query recentAcSubmissions($userSlug: String!) {\n  recentACSubmissions(userSlug: $userSlug) {\n    submissionId\n    submitTime\n    question {\n      translatedTitle\n      titleSlug\n      questionFrontendId\n    }\n  }\n}\n    ","variables":{"userSlug":"ssshards"}}"#;
-        let mut s:serde_json::Value = serde_json::from_str(s).unwrap();
+        let mut s: serde_json::Value = serde_json::from_str(s).unwrap();
         s["variables"]["userSlug"] = json!("eagle");
         println!("s = {:?}", s);
     }
+
     #[actix_rt::test]
     async fn test_a() {
         let s = r#"{"query":"\n    query recentAcSubmissions($userSlug: String!) {\n  recentACSubmissions(userSlug: $userSlug) {\n    submissionId\n    submitTime\n    question {\n      translatedTitle\n      titleSlug\n      questionFrontendId\n    }\n  }\n}\n    ","variables":{"userSlug":"ssshards"}}"#;
-        let s:serde_json::Value = serde_json::from_str(s).unwrap();
+        let s: serde_json::Value = serde_json::from_str(s).unwrap();
         println!("s = {:?}", s);
         let url = "https://leetcode.cn/graphql/noj-go/";
-        let text:serde_json::Value = reqwest::Client::builder()
+        let text: serde_json::Value = reqwest::Client::builder()
             .danger_accept_invalid_certs(true)
             .no_proxy()
             .build()

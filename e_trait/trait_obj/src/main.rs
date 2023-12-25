@@ -7,6 +7,11 @@ trait Bird {
 struct Duck;
 struct Swan;
 
+impl Drop for Duck {
+    fn drop(&mut self){
+        println!("dddd");
+    }
+}
 impl Bird for Duck {
     fn fly(&self) {
         println!("duck = {}", "fly");
@@ -24,6 +29,7 @@ impl Bird for Swan {
         let _b = vec![1212, 12,12213];
         println!("swan = {}", "chirp11111111111111111111111111");
     }
+
 }
 // trait object
 
@@ -58,6 +64,8 @@ fn main() {
 
     let p_duck = &duck;
     let p_bird = p_duck as &dyn Bird;
+    // println!("{:p}", p_duck.drop);
+    println!("ptr of duck {:p}, ptr of bird {:p}", p_duck, p_bird);
     println!("Size of p_duck {}, Size of p_bird {}", mem::size_of_val(&p_duck), mem::size_of_val(&p_bird));
     let duck_fly : usize = Duck::fly as usize;
     let swan_fly : usize = Swan::fly as usize;

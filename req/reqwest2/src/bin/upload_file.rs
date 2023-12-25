@@ -5,15 +5,16 @@ use color_eyre::Report;
 
 #[tokio::main]
 async fn main() -> Result<(), Report> {
-        color_eyre::install()?; // Initialize color-eyre.
+    color_eyre::install()?; // Initialize color-eyre.
     let app = App::new("upload")
         .about("upload file.")
         .arg(Arg::with_name("url").short("u")
 
             .default_value("http://localhost:8115/sw/save"))
-        .arg(Arg::with_name("file").short("-f")
+        .arg(Arg::with_name("file").short("f")
             .default_value("./Cargo.toml"))
         .get_matches();
+
     let url = app.value_of("url").unwrap();
     let file_path_s = app.value_of("file").unwrap();
     let file_path = PathBuf::from(file_path_s);

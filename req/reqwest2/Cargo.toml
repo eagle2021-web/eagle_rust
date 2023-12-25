@@ -17,3 +17,4 @@ url = "2.4.0"
 clap = "2.34.0"
 color-eyre = { version = "0.5", features = ["capture-spantrace"] } # 使用正确的版本号
 my_err = {path="../../my_err", version = "0.1.0"}
+http = "0.2.9"

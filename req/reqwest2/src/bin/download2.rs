@@ -2,14 +2,25 @@ use tokio::fs:: File;
 use tokio::io::AsyncWriteExt;
 use indicatif::{ProgressBar, ProgressStyle, ProgressState};
 use std::fmt::Write;
+use std::path::PathBuf;
+use std::thread;
+use std::time::Duration;
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // let url = "https://www.zenodo.org/record/7834392/files/full_dataset.tsv.gz.part-ac?download=1";
-    let url = "https://www.zenodo.org/record/8072936/files/trixi-framework/Trixi.jl-v0.5.30.zip?download=1";
+    let url = "https://www.zenodo.org/records/7562456/files/annealed%20samples.zip?download=1";
+    // let url = "https://dl.vmecum.com/VMware.exe";
+    // let url = "https://dl.hdslb.com/bili/bililive/win/Livehime-Win-beta-4.57.1.6192-x64.exe";
+    // let url = "https://huggingface.co/microsoft/phi-2/resolve/main/model-00001-of-00002.safetensors";
+    // let url = "https://sys-10-1.xiaoguaniu.com/win10/202312/G_WIN10_X64_19045.3803.iso?time=1703515342&ip=121.35.3.236&secret=28495047c58237590cdc4ec168b3a44a";
+
     let url_mod = reqwest::Url::parse(url)?;
     let path = url_mod.path();
     let filename = *path.split("/").collect::<Vec<&str>>().last().unwrap();
     println!("filename = {}", filename);
+    let mut file_path = PathBuf::from("d:/temp/");
+    file_path = file_path.join(filename);
     let client = reqwest::Client::new();
 
     // 创建一个 HeaderMap，并添加自定义的 header
@@ -17,7 +28,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     headers.insert(reqwest::header::RANGE, reqwest::header::HeaderValue::from_static("bytes=0-"));
 
     let mut response = client.get(url).headers(headers).send().await?;
-    let mut file = File::create(filename).await?;
+    for x in response.headers() {
+        println!("{}: {:?}", x.0, x.1);
+    }
+
+    let mut file = File::create(&file_path).await?;
 
     let total_size = response.content_length().unwrap_or(0);
     let mut downloaded_size = 0u64;

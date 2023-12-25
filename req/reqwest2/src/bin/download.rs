@@ -5,7 +5,7 @@ use tokio::fs::File;
 use tokio::io::{AsyncSeekExt, AsyncWriteExt};
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let url = "http://58.ddooo.com/Tth3Chs.exe?key=9096cb20df56d0bdb3403adf1c284eec&uskey=d6374a3b2e9060cc117be19221a3a598";
+    let url = "https://huggingface.co/microsoft/phi-2/resolve/main/model-00001-of-00002.safetensors";
     let url_mod = reqwest::Url::parse(url)?;
     let path = url_mod.path();
     let filename = *path.split("/").collect::<Vec<&str>>().last().unwrap();
@@ -20,9 +20,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut headers = reqwest::header::HeaderMap::new();
 
     // 如果文件已存在，设置请求字节偏移量为已下载的文件大小
+    let mut begin = 0;
     if let Ok(metadata) = metadata {
         let range_value = format!("bytes={}-", metadata.len());
         headers.insert(reqwest::header::RANGE, range_value.parse()?);
+        begin = metadata.len();
     }
 
     let mut response = client.get(url).headers(headers).send().await?;
@@ -32,9 +34,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .open(filename)
         .await?;
 
-    let total_size = response.content_length().unwrap_or(0);
+    let total_size = response.content_length().unwrap_or(0) + begin;
     println!("total_size = {}", total_size);
-    let mut downloaded_size = 0u64;
+    let mut downloaded_size = begin;
     let pb = ProgressBar::new(total_size);
 
     pb.set_style(ProgressStyle::with_template("{spinner:.green} [{elapsed_precise}] [{wide_bar:.cyan/blue}] {bytes}/{total_bytes} ({eta})")
@@ -50,7 +52,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .headers()
         .get("Content-Range");
     let content_length = headers.get("content-length").unwrap().to_str()?;
-    println!("content_length = {}", content_length);
     if content_range.is_none() && content_length.eq("3846"){
         return Ok(());
     }
