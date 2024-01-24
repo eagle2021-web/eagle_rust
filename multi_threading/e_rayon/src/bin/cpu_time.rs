@@ -39,6 +39,6 @@ pub fn get_cpu_time() -> Option<u64> {
 mod test {
     #[test]
     fn test_rayon() {
-
+        super::get_cpu_time();
     }
 }

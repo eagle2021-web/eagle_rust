@@ -1,3 +1,13 @@
+// Rust规定，如果函数中除了self这个参数之外，还在其他参数或者返回值中用到了Self类型，那么这个函数就不是object safe的。这样的函数是不能使用trait object来调用的。这样的方法是不能在虚函数表中存在的。
+// 2.如果有“静态方法”，那这个“静态方法”是不满足object safe条件的。这个条件几乎是显然的，编译器没有办法把静态方法加入到虚函数表中。
+// 与上面讲解的情况类似，如果一个trait中存在静态方法，而又希望通过trait object来调用其他的方法，那么我们需要在这个静态方法后面加上Self：Sized约束，将它从虚函数表中剔除。
+//函数带有一个泛型参数，如果我们使用trait object调用这个函数：
+// fn func(x: &dyn SomeTrait) {
+// 　　 x.generic_fn("foo"); // A = &str
+// 　　 x.generic_fn(1_u8); // A = u8
+// }
+// 这样的写法会让编译器特别犯难，本来x是trait object，通过它调用成员的方法是通过vtable虚函数表来进行查找并调用。现在需要被查找的函数成了泛型函数，而泛型函数在Rust中是编译阶段自动展开的，
+// generic_fn函数实际上有许多不同的版本。这里有一个根本性的冲突问题。Rust选择的解决方案是，禁止使用trait object来调用泛型函数，泛型函数是从虚函数表中剔除了的。这个行为跟C++是一样的。C++中同样规定了类的虚成员函数不可以是template方法。
 trait Foo where Self: Sized {
     fn foo(&self);
 }
@@ -23,7 +33,7 @@ impl Foo2 for i32 {
     }
 }
 
-
+#[test]
 fn main() {
     println!("Hello, world!");
     let x = 1_i32;

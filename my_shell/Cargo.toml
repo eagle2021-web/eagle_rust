@@ -40,4 +40,7 @@ name = "cnt_size"
 name = "cnt_h"
 [[bin]]
 name = "game"
+[[bin]]
+name = "setxx"
+
 

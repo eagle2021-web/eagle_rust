@@ -12,6 +12,7 @@ fn seek<'a>(name: &'a str, tx: &Sender<&'a str>, rx: &Receiver<&'a str>) {
 
 #[cfg(test)]
 mod test {
+    use std::thread;
     use std::thread::sleep;
     use std::time::Duration;
     use super::select;
@@ -67,5 +68,26 @@ mod test {
                 assert!(res.is_ok())
             },
         }
+    }
+    const COUNT: u32 = 10;
+    #[test]
+    fn channel22() {
+        let (s, r) = crossbeam::channel::bounded(1);
+        let (s2, r2) = crossbeam::channel::bounded(1);
+        let thread1 = thread::spawn(move || {
+            for i in 0..COUNT {
+                s.send(1);
+                print!("{}", r2.recv().unwrap());
+            }
+        });
+        let thread2 = thread::spawn(move || {
+            for i in 0..COUNT {
+                print!("{}", r.recv().unwrap());
+                s2.send('a');
+            }
+        });
+        thread1.join().ok();
+        thread2.join().ok();
+        // println!("111111");
     }
 }

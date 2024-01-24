@@ -21,3 +21,5 @@ mod my_feature;
 mod my_heap;
 mod my_memory;
 
+mod lifetime;
+mod my_coroutine;

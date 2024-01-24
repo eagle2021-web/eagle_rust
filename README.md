@@ -21,6 +21,8 @@ rustup override set stable
 https://zjp-cn.github.io/tlborm/
 
 ### 下载安装init慢问题
+$ENV:RUSTUP_DIST_SERVER='https://mirrors.ustc.edu.cn/rust-static'
+$ENV:RUSTUP_UPDATE_ROOT='https://mirrors.ustc.edu.cn/rust-static/rustup'
 
 ### 工具
 https://www.bilibili.com/video/BV1KH4y1k7ra/?spm_id_from=333.1007.tianma.7-3-22.click&vd_source=541a9e4b8312074cc8045df26c1ed226
