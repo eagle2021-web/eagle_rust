@@ -42,5 +42,7 @@ name = "cnt_h"
 name = "game"
 [[bin]]
 name = "setxx"
+[[bin]]
+name = "push"
 
 
