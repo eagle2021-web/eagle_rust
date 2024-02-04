@@ -6,3 +6,16 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+reqwest = { version = "0.11", features = ["json", "multipart"] }
+tokio = { version = "1", features = ["full"] }
+serde_json = "1.0.83"
+actix-rt = {version = "2.7.0"}
+serde = { version = "1.0", features = ["derive"] }
+indicatif = "0.17.5"
+ssh2 = "0.9.4"
+url = "2.4.0"
+clap = "2.34.0"
+color-eyre = { version = "0.5", features = ["capture-spantrace"] } # 使用正确的版本号
+my_err = {path="../my_err", version = "0.1.0"}
+http = "0.2.9"
+serde-xml-rs ="0"
