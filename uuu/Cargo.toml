@@ -19,3 +19,4 @@ color-eyre = { version = "0.5", features = ["capture-spantrace"] } # 使用正�
 my_err = {path="../my_err", version = "0.1.0"}
 http = "0.2.9"
 serde-xml-rs ="0"
+druid-shell = "0.7.0"
